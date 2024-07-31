@@ -1,16 +1,22 @@
 package org.boot.dontspike.BloodSugar;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+
+@RestController//json파일 보낼때 사용하는 annotation
+@RequiredArgsConstructor
 public class BloodSugarController {
-    @Autowired
-    private BloodSugarService bloodSugarService;
 
+    private final BloodSugarService bloodSugarService;
 
-//    @PostMapping("/blood-sugar")
-//    public String addBloodSugarRecord() {
-//
-//    }
+    @GetMapping("/api/blood-sugar/food/{user_id}")
+    public List<GraphDto> getGraph(@PathVariable Long user_id) {
+        return bloodSugarService.getGraph(user_id);
+    }
+
 }

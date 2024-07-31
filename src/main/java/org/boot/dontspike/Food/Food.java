@@ -3,6 +3,7 @@ package org.boot.dontspike.Food;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.boot.dontspike.FoodWiki.Foodwiki;
 
 @Getter
 @Setter
@@ -10,7 +11,10 @@ import lombok.Setter;
 public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int fooddata_id;
+    private Long fooddata_id;
+
+    @OneToOne(mappedBy = "food")
+    private Foodwiki foodwiki;
 
     @Column(name="foodname",length=50,nullable = false)
     private String foodname;
@@ -19,25 +23,22 @@ public class Food {
     private int amount;
 
     @Column(name="calorie")
-    private int calorie;
+    private double calorie;
 
     @Column(name = "protein")
-    private int protein;
+    private double protein;
 
     @Column(name = "fat")
-    private int fat;
+    private double fat;
 
     @Column(name = "sodium")
-    private int sodium;
+    private double sodium;
 
     @Column(name = "cholesterol")
-    private int cholesterol;
+    private double cholesterol;
 
     @Column(name = "carbohydrate")
-    private int carbohydrate;
-
-    @Column(name = "food_image", columnDefinition = "TEXT")
-    private String foodImage;
+    private double carbohydrate;
 
 
 
