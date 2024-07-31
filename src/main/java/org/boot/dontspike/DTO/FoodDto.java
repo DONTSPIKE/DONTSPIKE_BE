@@ -6,12 +6,11 @@ import lombok.Setter;
 @Getter @Setter
 public class FoodDto {
     private String foodname;
-    private int calorie;
-    private int protein;
-    private int fat;
-    private int sodium;
-    private int cholesterol;
-    private int carbohydrate;
-    private String foodImage;
+    private double calorie;
+    private double protein;
+    private double fat;
+    private double sodium;
+    private double cholesterol;
+    private double carbohydrate;
 }
 

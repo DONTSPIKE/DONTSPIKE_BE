@@ -3,6 +3,7 @@ package org.boot.dontspike.FoodWiki;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.boot.dontspike.Food.Food;
 
 @Getter
 @Setter
@@ -13,8 +14,12 @@ public class Foodwiki {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long foodwikiId;
 
-    @Column(name = "fooddata_id", nullable = false)
+    @Column(name="fooddata_id")
     private Long fooddataId;
+
+    @OneToOne
+    @JoinColumn(name = "fooddata_id", referencedColumnName = "fooddata_id", insertable = false, updatable = false)
+    private Food food;
 
     @Column(name = "expert_opinion", length = 300)
     private String expertOpinion;

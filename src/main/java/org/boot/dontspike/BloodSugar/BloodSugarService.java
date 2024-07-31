@@ -1,21 +1,23 @@
 package org.boot.dontspike.BloodSugar;
 
-import org.boot.dontspike.DTO.BloodSugarInputDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BloodSugarService {
-    @Autowired
-    private BloodSugarRepository bloodSugarRepository;
+    private final BloodSugarRepository repository;
 
-    public void addBloodSugar(BloodSugarInputDto input, Long userId){
-        BloodSugar bloodSugar = new BloodSugar();
-        bloodSugar.setUserId(userId);
-        bloodSugar.setRecordDate(LocalDateTime.parse(input.getDate(), DateTimeFormatter.ISO_DATE_TIME));
-        bloodSugarRepository.save(bloodSugar);
+    public List<GraphDto> getGraph(Long userId){
+        List<BloodSugar> bloodSugarList = repository.findByUserIdAndRecordDateAfter(userId, LocalDateTime.now().minusDays(7));
+        return bloodSugarList.stream().map(bloodSugar -> new GraphDto(bloodSugar))
+                .collect(Collectors.toList());
     }
+
+
+
 }
