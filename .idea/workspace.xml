@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14a3ff0e-f383-4c2d-8e48-14179be0d9be" name="Changes" comment="feat : 아무것도아님" />
+    <list default="true" id="14a3ff0e-f383-4c2d-8e48-14179be0d9be" name="Changes" comment="feat : 아무것도아님">
+      <change afterPath="$PROJECT_DIR$/scripts/deploy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +92,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.DontspikeApplication.executor": "Run",
-    "git-widget-placeholder": "#3 on Jihwan",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/mongsil/Desktop/CODING/Spring/DONTSPIKE_BE",
     "node.js.detected.package.eslint": "true",
@@ -144,7 +149,7 @@
       <workItem from="1721988989408" duration="923000" />
       <workItem from="1721989950174" duration="4499000" />
       <workItem from="1722007217412" duration="2712000" />
-      <workItem from="1722265604799" duration="15849000" />
+      <workItem from="1722265604799" duration="17359000" />
     </task>
     <task id="LOCAL-00001" summary="feat : DB connect">
       <option name="closed" value="true" />
@@ -178,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722425142964</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat : 아무것도아님">
+      <option name="closed" value="true" />
+      <created>1722425790304</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1722425790304</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
