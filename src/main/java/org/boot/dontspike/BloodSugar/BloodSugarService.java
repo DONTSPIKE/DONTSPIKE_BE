@@ -17,7 +17,4 @@ public class BloodSugarService {
         return bloodSugarList.stream().map(bloodSugar -> new GraphDto(bloodSugar))
                 .collect(Collectors.toList());
     }
-
-
-
 }
