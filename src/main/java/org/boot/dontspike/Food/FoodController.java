@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins="https://localhost:5173")
 public class FoodController {
     @Autowired
     private FoodService foodService;
