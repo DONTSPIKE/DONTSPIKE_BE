@@ -9,10 +9,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugar.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
@@ -76,7 +72,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -111,6 +107,11 @@
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Database",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RunManager">
@@ -155,7 +156,7 @@
       <workItem from="1721988989408" duration="923000" />
       <workItem from="1721989950174" duration="4499000" />
       <workItem from="1722007217412" duration="2712000" />
-      <workItem from="1722265604799" duration="21497000" />
+      <workItem from="1722265604799" duration="23225000" />
     </task>
     <task id="LOCAL-00001" summary="feat : DB connect">
       <option name="closed" value="true" />
@@ -205,7 +206,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722427475474</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat : deploy.sh생성">
+      <option name="closed" value="true" />
+      <created>1722454212881</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1722454212881</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
