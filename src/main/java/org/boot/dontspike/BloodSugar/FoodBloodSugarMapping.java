@@ -20,6 +20,6 @@ public class FoodBloodSugarMapping {
     private BloodSugar bloodSugarRecordId;
 
     @JoinColumn(name = "fooddata_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Food foodDataId;
 }
