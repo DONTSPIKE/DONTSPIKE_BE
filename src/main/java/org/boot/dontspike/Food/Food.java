@@ -20,25 +20,25 @@ public class Food {
     private String foodname;
 
     @Column(name="amount")
-    private int amount;
+    private Integer amount;
 
     @Column(name="calorie")
-    private double calorie;
+    private Double calorie;
 
     @Column(name = "protein")
-    private double protein;
+    private Double protein;
 
     @Column(name = "fat")
-    private double fat;
+    private Double fat;
 
     @Column(name = "sodium")
-    private double sodium;
+    private Double sodium;
 
     @Column(name = "cholesterol")
-    private double cholesterol;
+    private Double cholesterol;
 
     @Column(name = "carbohydrate")
-    private double carbohydrate;
+    private Double carbohydrate;
 
 
 
