@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식관리, 푸드위키" />
+    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식관리, 푸드위키1">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backup_ieda/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backup_ieda/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backup_ieda/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backup_ieda/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +108,23 @@
       <option name="project" value="LOCAL" />
       <updated>1722513324680</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="음식관리, 푸드위키1">
+      <option name="closed" value="true" />
+      <created>1722516714232</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1722516714232</updated>
+    </task>
+    <task id="LOCAL-00004" summary="음식관리, 푸드위키1">
+      <option name="closed" value="true" />
+      <created>1722516724231</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1722516724231</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,7 +143,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="음식관리, 푸드위키" />
-    <option name="LAST_COMMIT_MESSAGE" value="음식관리, 푸드위키" />
+    <MESSAGE value="음식관리, 푸드위키1" />
+    <option name="LAST_COMMIT_MESSAGE" value="음식관리, 푸드위키1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
