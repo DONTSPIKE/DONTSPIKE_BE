@@ -21,21 +21,28 @@ public class BloodSugarService {
                 .collect(Collectors.toList());
     }
     public Map<String, Double> getMonthlyAverages(Long userId, int year) {
-        LocalDateTime startOfYear = LocalDate.of(year, 1, 1).atStartOfDay();
-        LocalDateTime endOfYear = LocalDate.of(year, 12, 31).atTime(23, 59, 59);
+        // 연도의 시작과 끝 날짜 계산
+        LocalDateTime startOfYear = LocalDateTime.of(year, 1, 1, 0, 0);
+        LocalDateTime endOfYear = LocalDateTime.of(year, 12, 31, 23, 59, 59);
 
+        // 주어진 사용자와 연도에 해당하는 혈당 기록 조회
         List<BloodSugar> bloodSugarList = repository.findByUserIdAndDateRange(userId, startOfYear, endOfYear);
 
-        Map<String, Double> monthlyAverages = new HashMap<>();
-
-        bloodSugarList.stream()
+        // 월별 평균 계산
+        Map<String, Double> monthlyAverages = bloodSugarList.stream()
                 .collect(Collectors.groupingBy(
                         b -> b.getRecordDate().getMonth().name(),
                         Collectors.averagingDouble(BloodSugar::getBloodSugar)
-                ))
-                .forEach((month, average) -> monthlyAverages.put(month, average));
+                ));
 
-        return monthlyAverages;
+        // 월 이름을 정렬된 순서로 반환
+        Map<String, Double> sortedMonthlyAverages = new HashMap<>();
+        for (int month = 1; month <= 12; month++) {
+            String monthName = LocalDateTime.of(year, month, 1, 0, 0).getMonth().name();
+            sortedMonthlyAverages.put(monthName, monthlyAverages.getOrDefault(monthName, 0.0));
+        }
+
+        return sortedMonthlyAverages;
     }
 
 }
