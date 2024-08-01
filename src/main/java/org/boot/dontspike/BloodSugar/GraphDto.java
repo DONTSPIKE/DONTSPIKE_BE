@@ -1,9 +1,19 @@
 package org.boot.dontspike.BloodSugar;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@JsonSerialize
+@JsonDeserialize
+@Getter @Setter
+@RequiredArgsConstructor
 public class GraphDto {
 
     private LocalDateTime recorddate;
