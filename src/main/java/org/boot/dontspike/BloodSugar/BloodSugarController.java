@@ -1,5 +1,6 @@
 package org.boot.dontspike.BloodSugar;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,13 @@ public class BloodSugarController {
     private final BloodSugarService bloodSugarService;
 
     @GetMapping("/api/blood-sugar/food/{user_id}")
-    public List<GraphDto> getGraph(@PathVariable Long user_id) {
-        return bloodSugarService.getGraph(user_id);
+    public ResponseEntity<List<GraphDto>> getGraph(@PathVariable String user_id) {
+        try {
+            Long userIdLong = Long.parseLong(user_id);
+            return ResponseEntity.ok(bloodSugarService.getGraph(userIdLong));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("api/blood-sugar/average")
