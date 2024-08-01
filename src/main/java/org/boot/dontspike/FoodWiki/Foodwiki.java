@@ -31,5 +31,5 @@ public class Foodwiki {
     private String ingestionMethod;
 
     @Column(name = "GI")
-    private double gi;
+    private Double gi;
 }
