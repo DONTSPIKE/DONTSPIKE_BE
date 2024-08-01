@@ -9,7 +9,7 @@ import java.util.Map;
 
 @RestController//json파일 보낼때 사용하는 annotation
 @RequiredArgsConstructor
-@CrossOrigin(origins="https://localhost:5173")
+@CrossOrigin
 public class BloodSugarController {
 
     private final BloodSugarService bloodSugarService;

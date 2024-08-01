@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins="https://localhost:5173")
+@CrossOrigin
 public class FoodWikiController {
     @Autowired
     private FoodService foodService;
