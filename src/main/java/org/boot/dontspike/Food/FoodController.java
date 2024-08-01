@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class FoodController {
     @Autowired
     private FoodService foodService;
@@ -29,7 +30,7 @@ public class FoodController {
     public ResponseEntity<String> createFood(@RequestBody String foodname) {
         Food createdFood = foodService.createFood(foodname);
         return new ResponseEntity<>("등록 되었습니다", HttpStatus.CREATED);
-        //이미 등록된 음식입니다 <- 추가하기
+        //Service에서 이미 등록된 음식입니다 처리
     }
 
     @PostMapping("/api/diet/add-food") //음식 추가하기-> foodId랑 date 받고, 날짜별 음식 기록하기
