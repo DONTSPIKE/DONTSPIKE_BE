@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="feat : gitignore변경">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +174,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722601382164</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat : gitignore변경">
+      <option name="closed" value="true" />
+      <created>1722603783144</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1722603783144</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
