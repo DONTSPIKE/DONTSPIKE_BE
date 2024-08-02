@@ -17,7 +17,6 @@ import java.util.Map;
 public class BloodSugarController {
 
     private final BloodSugarService bloodSugarService;
-
     @GetMapping("/api/blood-sugar/food/{user_id}")
     public ResponseEntity<List<GraphDto>> getGraph(@PathVariable String user_id) {
         try {
