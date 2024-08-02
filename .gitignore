@@ -19,6 +19,7 @@ bin/
 
 ### IntelliJ IDEA ###
 # IntelliJ IDEA specific files
+workspace.xml
 .idea/workspace.xml
 .idea/
 *.iws

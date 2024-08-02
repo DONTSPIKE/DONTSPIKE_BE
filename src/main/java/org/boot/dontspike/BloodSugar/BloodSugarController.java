@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController//json파일 보낼때 사용하는 annotation
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class BloodSugarController {
 
     private final BloodSugarService bloodSugarService;
