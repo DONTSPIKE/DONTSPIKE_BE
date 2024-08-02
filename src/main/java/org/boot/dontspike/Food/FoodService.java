@@ -1,7 +1,6 @@
 package org.boot.dontspike.Food;
 
 import org.boot.dontspike.DTO.FoodDto;
-import org.boot.dontspike.DTO.FrequentFoodDto;
 import org.boot.dontspike.FoodWiki.FoodWikiRepository;
 import org.boot.dontspike.DTO.FoodDetailDto;
 import org.boot.dontspike.FoodWiki.Foodwiki;
@@ -106,11 +105,11 @@ public class FoodService {
                 .collect(Collectors.toList());
     }
 
-    public List<FrequentFoodDto> getFoodsEatenAtLeastFiveTimesInMonth(LocalDate monthDate) {
-        LocalDate startDate = monthDate.withDayOfMonth(1);
-        LocalDate endDate = monthDate.withDayOfMonth(monthDate.lengthOfMonth());
-        return foodRecordRepository.findFrequentFoodNames(startDate, endDate);
-    }
+//    public List<FrequentFoodDto> getFoodsEatenAtLeastFiveTimesInMonth(LocalDate monthDate) {
+//        LocalDate startDate = monthDate.withDayOfMonth(1);
+//        LocalDate endDate = monthDate.withDayOfMonth(monthDate.lengthOfMonth());
+//        return foodRecordRepository.findFrequentFoodNames(startDate, endDate);
+//    }
 
 }
 
