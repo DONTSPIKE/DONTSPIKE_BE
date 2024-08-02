@@ -35,5 +35,13 @@ public class BloodSugar {
     private List<FoodBloodSugarMapping> foodBloodSugarMappings = new ArrayList<>();
 
     @Column(name = "bloodsugar", nullable = false)
-    private double bloodSugar;
+    private Double bloodSugar;
+
+
+    //==생성 메서드==//
+    public BloodSugar(User user, LocalDateTime recordDate) {
+        this.user = user;
+        this.recordDate = recordDate;
+    }
+
 }
