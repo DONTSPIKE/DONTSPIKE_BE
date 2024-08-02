@@ -17,4 +17,7 @@ public interface BloodSugarRepository extends JpaRepository<BloodSugar, Long> {
     @Query("SELECT b FROM BloodSugar b WHERE b.user.id = :userId AND b.recordDate BETWEEN :startDate AND :endDate")
     List<BloodSugar> findByUserIdAndDateRange(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
     Optional<BloodSugar> findByUserAndRecordDate(User user, LocalDateTime recordDate);
+
+    Optional<Object> findByUserAndRecordDateBetween(User currentUser, LocalDateTime startOfDay, LocalDateTime endOfDay);
+    Optional<BloodSugar> findFirstByUserAndRecordDateBetween(User user, LocalDateTime startOfDay, LocalDateTime endOfDay);
 }

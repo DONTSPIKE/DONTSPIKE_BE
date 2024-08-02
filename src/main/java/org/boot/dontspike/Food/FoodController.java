@@ -5,6 +5,7 @@ import org.boot.dontspike.DTO.FoodDto;
 
 import org.boot.dontspike.DTO.FrequentFoodDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,16 +36,17 @@ public class FoodController {
     }
 
     @PostMapping("/api/diet/add-food") //음식 추가하기-> foodId랑 date 받고, 날짜별 음식 기록하기
-    public ResponseEntity<Void> addFoodRecord(@RequestParam Long foodId, @RequestParam String date) {
-        LocalDate recordDate = LocalDate.parse(date);
-        foodService.addFoodRecord(foodId, recordDate);
-        return ResponseEntity.ok().build();
+    public void addFoodToBloodSugarRecord(
+            @RequestParam Long userId,
+            @RequestParam Long foodId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate recordDate) {
+        foodService.addFoodToBloodSugarRecord(userId, foodId, recordDate);
     }
 
-    @GetMapping("/api/food/favorites") // 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
-    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(@RequestParam("month") String month) {
-        LocalDate monthDate = LocalDate.parse(month + "-01"); // "YYYY-MM" 형식으로 입력 받음
-        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(monthDate);
-        return ResponseEntity.ok(frequentFoods);
-    }
+//    @GetMapping("/api/food/favorites") // 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
+//    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(@RequestParam("month") String month) {
+//        LocalDate monthDate = LocalDate.parse(month + "-01"); // "YYYY-MM" 형식으로 입력 받음
+//        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(monthDate);
+//        return ResponseEntity.ok(frequentFoods);
+//    }
 }
