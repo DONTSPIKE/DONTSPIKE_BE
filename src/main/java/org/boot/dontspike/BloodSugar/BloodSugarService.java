@@ -1,13 +1,18 @@
 package org.boot.dontspike.BloodSugar;
 
 import lombok.RequiredArgsConstructor;
+import org.boot.dontspike.Food.Food;
+import org.boot.dontspike.Food.FoodAlreadyExistsException;
+import org.boot.dontspike.User.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +48,14 @@ public class BloodSugarService {
         }
 
         return sortedMonthlyAverages;
+    }
+
+    @Transactional
+    public void createOrUpdateBloodSugar(User user, LocalDateTime date, Double bloodSugar) {
+        BloodSugar bloodSugarRecord = repository.findByUserAndRecordDate(user, date)
+                .orElse(new BloodSugar(user, date));
+        bloodSugarRecord.setBloodSugar(bloodSugar);
+        repository.save(bloodSugarRecord);
     }
 
 }
