@@ -4,16 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식관리, 푸드위키3">
+    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식관리, 푸드위키4">
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/dontspike.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/dontspike.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/FoodWiki/FoodWikiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/FoodWiki/FoodWikiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/DTO/FoodDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/DTO/FoodDetailDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/DTO/FoodDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/DTO/FoodDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodRecordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodRecordRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +31,13 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -90,6 +104,8 @@
       <option name="presentableId" value="Default" />
       <updated>1722508872858</updated>
       <workItem from="1722508874419" duration="7214000" />
+      <workItem from="1722580487290" duration="1204000" />
+      <workItem from="1722596333517" duration="1959000" />
     </task>
     <task id="LOCAL-00001" summary="음식관리, 푸드위키">
       <option name="closed" value="true" />
@@ -139,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722522509391</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="음식관리, 푸드위키4">
+      <option name="closed" value="true" />
+      <created>1722523756417</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1722523756417</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,7 +185,8 @@
     <MESSAGE value="음식관리, 푸드위키1" />
     <MESSAGE value="음식관리, 푸드위키2" />
     <MESSAGE value="음식관리, 푸드위키3" />
-    <option name="LAST_COMMIT_MESSAGE" value="음식관리, 푸드위키3" />
+    <MESSAGE value="음식관리, 푸드위키4" />
+    <option name="LAST_COMMIT_MESSAGE" value="음식관리, 푸드위키4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -171,6 +196,15 @@
           <line>21</line>
           <properties field="food" class="org.boot.dontspike.FoodWiki.Foodwiki" />
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodController.java</url>
+          <line>44</line>
+          <properties class="org.boot.dontspike.Food.FoodController" method="getFoodsEatenAtLeastFiveTimesInMonth">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

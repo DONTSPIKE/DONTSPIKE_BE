@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class FoodDto {
     private String foodname;
+    private int foodId;
     private double calorie;
     private double protein;
     private double fat;

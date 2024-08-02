@@ -1,10 +1,12 @@
 package org.boot.dontspike.DTO;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class FoodDetailDto {
 //    private int fooddata_id;
     private String foodname;
@@ -20,4 +22,8 @@ public class FoodDetailDto {
     private String properIntake;
     private String ingestionMethod;
     private double GI;
+
+    public FoodDetailDto() {
+
+    }
 }
