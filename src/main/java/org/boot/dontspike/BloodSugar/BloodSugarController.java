@@ -1,10 +1,13 @@
 package org.boot.dontspike.BloodSugar;
 
+import org.boot.dontspike.User.User;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +28,7 @@ public class BloodSugarController {
         }
     }
 
-    @GetMapping("api/blood-sugar/average")
+    @GetMapping("/api/blood-sugar/average")
     public Map<String, Object> getMonthlyAverages(
             @RequestParam("user_id") Long userId,
             @RequestParam("year") int year) {
@@ -35,6 +38,21 @@ public class BloodSugarController {
                 "year", year,
                 "monthly_averages", averages
         );
+    }
+
+    @PostMapping("/api/{user_id}/blood-sugar")
+    public ResponseEntity<?> createBloodsugar(@PathVariable String user_id, @RequestParam("date") LocalDateTime date, @RequestParam("bloodsugar") Double bloodSugar) {
+        try {
+            Long userIdLong = Long.parseLong(user_id);
+            User user = new User();
+            user.setId(userIdLong);
+            bloodSugarService.createOrUpdateBloodSugar(user, date, bloodSugar);
+            return ResponseEntity.ok("등록되었습니다.");
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body("올바른 회원 아이디가 아닙니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("서버 에러"+ e.getMessage());
+        }
     }
 
 }
