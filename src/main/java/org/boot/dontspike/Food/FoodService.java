@@ -1,10 +1,16 @@
 package org.boot.dontspike.Food;
 
+import org.boot.dontspike.BloodSugar.BloodSugar;
+import org.boot.dontspike.BloodSugar.BloodSugarRepository;
+import org.boot.dontspike.BloodSugar.FoodBloodSugarMapping;
+import org.boot.dontspike.BloodSugar.FoodBloodSugarMappingRepository;
 import org.boot.dontspike.DTO.FoodDto;
 import org.boot.dontspike.DTO.FrequentFoodDto;
 import org.boot.dontspike.FoodWiki.FoodWikiRepository;
 import org.boot.dontspike.DTO.FoodDetailDto;
 import org.boot.dontspike.FoodWiki.Foodwiki;
+import org.boot.dontspike.User.User;
+import org.boot.dontspike.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,8 +29,17 @@ public class FoodService {
 
     @Autowired
     private FoodWikiRepository foodWikiRepository;
+
+
     @Autowired
-    private FoodRecordRepository foodRecordRepository;
+    private BloodSugarRepository bloodSugarRepository;
+    @Autowired
+    private FoodBloodSugarMappingRepository FoodbloodSugarmappingRepository;
+    @Autowired
+    private FoodBloodSugarMappingRepository foodBloodSugarMappingRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<FoodDto> getAllFood(String foodname) {
         List<Food> foods = foodRepository.findByFoodnameContaining(foodname);
@@ -87,30 +99,59 @@ public class FoodService {
             return foodRepository.save(newFood);
         }
     }
-    @Transactional
-    public void addFoodRecord(Long foodId, LocalDate recordDate){
-        Food food=foodRepository.findById(foodId)
-                .orElseThrow(()->new RuntimeException("Food not found"));
+//    public List<FoodDto> getFoodsByBloodSugarDate(LocalDate recordDate) {
+//        LocalDateTime startOfDay = recordDate.atStartOfDay();
+//        LocalDateTime endOfDay = startOfDay.plusDays(1).minusNanos(1);
+//
+//        // BloodSugar 레코드를 날짜로 찾기
+//        List<BloodSugar> bloodSugars = bloodSugarRepository.findByUserIdAndDateRange(
+//                /* 사용자 ID를 제공하는 방법에 따라 변경 */
+//                1L,
+//                startOfDay,
+//                endOfDay
+//        );
+//
+//        if (bloodSugars.isEmpty()) {
+//            return Collections.emptyList();
+//        }
+//
+//        // 해당 날짜에 추가된 음식들을 조회
+//        List<Food> foods = foodBloodSugarMappingRepository.findFoodsByBloodSugarRecordDate(startOfDay);
+//
+//        // DTO로 변환
+//        return foods.stream()
+//                .map(food -> new FoodDto(food))
+//                .collect(Collectors.toList());
+//    }
+@Transactional
+public void addFoodToBloodSugarRecord(Long userId, Long foodId, LocalDate recordDate) {
+    // 1. Food 엔티티 가져오기
+    Food food = foodRepository.findById(foodId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid food ID"));
 
-        FoodRecord foodRecord=new FoodRecord();
-        foodRecord.setFood(food);
-        foodRecord.setRecorddate(recordDate);
+    // 2. 현재 사용자 가져오기
+    User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
 
-        foodRecordRepository.save(foodRecord);
+    // 3. 해당 날짜와 사용자에 대한 BloodSugar 기록 찾기
+    LocalDateTime startOfDay = recordDate.atStartOfDay();
+    LocalDateTime endOfDay = startOfDay.plusDays(1).minusNanos(1); // 하루의 마지막 순간까지
+
+    Optional<BloodSugar> optionalBloodSugar = bloodSugarRepository.findFirstByUserAndRecordDateBetween(user, startOfDay, endOfDay);
+
+    if (optionalBloodSugar.isEmpty()) {
+        throw new IllegalArgumentException("No blood sugar record found for the given date");
     }
 
-    public List<String> getFoodsByDate(LocalDate recordDate) {
-        List<FoodRecord> foodRecords = foodRecordRepository.findByRecorddate(recordDate);
-        return foodRecords.stream()
-                .map(foodRecord -> foodRecord.getFood().getFoodname())
-                .collect(Collectors.toList());
-    }
+    BloodSugar bloodSugarRecord = optionalBloodSugar.get();
 
-    public List<FrequentFoodDto> getFoodsEatenAtLeastFiveTimesInMonth(LocalDate monthDate) {
-        LocalDate startDate = monthDate.withDayOfMonth(1);
-        LocalDate endDate = monthDate.withDayOfMonth(monthDate.lengthOfMonth());
-        return foodRecordRepository.findFrequentFoodNames(startDate, endDate);
-    }
+    // 4. FoodBloodSugarMapping 생성 및 저장
+    FoodBloodSugarMapping mapping = new FoodBloodSugarMapping();
+    mapping.setBloodSugarRecordId(bloodSugarRecord);
+    mapping.setFoodDataId(food);
+
+    foodBloodSugarMappingRepository.save(mapping);
+}
 
 }
 
