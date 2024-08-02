@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="feat : 혈당입력 api 생성" />
+    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="feat : gitignore변경">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +25,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "SIN-00"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/DONTSPIKE/DONTSPIKE_BE.git",
@@ -59,7 +67,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.DontspikeApplication.executor": "Run",
-    "git-widget-placeholder": "#10 on Jihwan2",
+    "git-widget-placeholder": "#11 on Jihwan2",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -155,7 +163,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722601064604</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat : gitignore변경">
+      <option name="closed" value="true" />
+      <created>1722601382164</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1722601382164</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,7 +194,8 @@
     <MESSAGE value="음식관리, 푸드위키2" />
     <MESSAGE value="음식관리, 푸드위키3" />
     <MESSAGE value="feat : 혈당입력 api 생성" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : 혈당입력 api 생성" />
+    <MESSAGE value="feat : gitignore변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : gitignore변경" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
