@@ -40,12 +40,13 @@ public class BloodSugarController {
     }
 
     @PostMapping("/api/{user_id}/blood-sugar")
-    public ResponseEntity<?> createBloodsugar(@PathVariable String user_id, @RequestParam("date") LocalDateTime date, @RequestParam("bloodsugar") Double bloodSugar) {
+    public ResponseEntity<?> createBloodsugar(@PathVariable String user_id, @RequestParam("date") String date, @RequestParam("bloodsugar") Double bloodSugar) {
         try {
             Long userIdLong = Long.parseLong(user_id);
+            LocalDateTime recorddate = LocalDateTime.parse(date);
             User user = new User();
             user.setId(userIdLong);
-            bloodSugarService.createOrUpdateBloodSugar(user, date, bloodSugar);
+            bloodSugarService.createOrUpdateBloodSugar(user, recorddate, bloodSugar);
             return ResponseEntity.ok("등록되었습니다.");
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body("올바른 회원 아이디가 아닙니다.");
