@@ -7,27 +7,14 @@ import lombok.Setter;
 @Setter
 @Getter
 public class FrequentFoodDto {
+
+    private Long foodDataId;
     private String foodName;
-    private long count;
+    private Long count;
 
-    public FrequentFoodDto(String foodName, long count) {
+    public FrequentFoodDto(Long foodDataId, String foodName, Long count) {
+        this.foodDataId = foodDataId;
         this.foodName = foodName;
-        this.count = count;
-    }
-
-    public String getFoodName() {
-        return foodName;
-    }
-
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
-    }
-
-    public long getCount() {
-        return count;
-    }
-
-    public void setCount(long count) {
         this.count = count;
     }
 

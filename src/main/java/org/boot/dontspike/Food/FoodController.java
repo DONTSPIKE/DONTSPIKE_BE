@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,10 +44,10 @@ public class FoodController {
         foodService.addFoodToBloodSugarRecord(userId, foodId, recordDate);
     }
 
-//    @GetMapping("/api/food/favorites") // 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
-//    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(@RequestParam("month") String month) {
-//        LocalDate monthDate = LocalDate.parse(month + "-01"); // "YYYY-MM" 형식으로 입력 받음
-//        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(monthDate);
-//        return ResponseEntity.ok(frequentFoods);
-//    }
+    @GetMapping("/api/food/favorites") // 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
+    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(@RequestParam("month") String month) {
+        LocalDate monthDate = LocalDate.parse(month + "-01"); // "YYYY-MM" 형식으로 입력 받음
+        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(monthDate);
+        return ResponseEntity.ok(frequentFoods);
+    }
 }
