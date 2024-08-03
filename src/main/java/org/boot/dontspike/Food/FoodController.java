@@ -39,8 +39,8 @@ public class FoodController {
 
     @PostMapping("/api/diet/add-food") //음식 추가하기-> foodId랑 date 받고, 날짜별 음식 기록하기
     public void addFoodToBloodSugarRecord(
-            @RequestParam Long userId,
-            @RequestParam Long foodId,
+            @RequestParam ("userId")Long userId,
+            @RequestParam ("foodId")Long foodId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate recordDate) {
         foodService.addFoodToBloodSugarRecord(userId, foodId, recordDate);
     }
