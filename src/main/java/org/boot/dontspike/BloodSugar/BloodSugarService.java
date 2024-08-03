@@ -21,7 +21,7 @@ public class BloodSugarService {
     private final BloodSugarRepository repository;
 
     public List<GraphDto> getGraph(Long userId){
-        List<BloodSugar> bloodSugarList = repository.findByUserIdAndRecordDateAfter(userId, LocalDateTime.now().minusDays(7));
+        List<BloodSugar> bloodSugarList = repository.findByUserIdAndRecordDateBefore(userId, LocalDateTime.now());
         return bloodSugarList.stream().map(bloodSugar -> new GraphDto(bloodSugar))
                 .collect(Collectors.toList());
     }
