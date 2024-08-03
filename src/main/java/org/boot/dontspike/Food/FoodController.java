@@ -3,6 +3,7 @@ package org.boot.dontspike.Food;
 import lombok.Getter;
 import org.boot.dontspike.DTO.FoodDto;
 
+//import org.boot.dontspike.DTO.FrequentFoodDto;
 import org.boot.dontspike.DTO.FrequentFoodDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
