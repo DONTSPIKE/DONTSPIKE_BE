@@ -52,7 +52,8 @@ public class BloodSugarService {
 
     @Transactional
     public void createOrUpdateBloodSugar(User user, LocalDateTime date, Double bloodSugar) {
-        BloodSugar bloodSugarRecord = repository.findByUserAndRecordDate(user, date)
+        LocalDate findDate = date.toLocalDate();
+        BloodSugar bloodSugarRecord = repository.findByUserIdAndDay(user.getId(), findDate)
                 .orElse(new BloodSugar(user, date));
         bloodSugarRecord.setBloodSugar(bloodSugar);
         repository.save(bloodSugarRecord);
