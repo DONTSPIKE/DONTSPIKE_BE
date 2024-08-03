@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식 추가(식단 추가)">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +77,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.DontspikeApplication.executor": "Run",
-    "git-widget-placeholder": "Jihwan2",
+    "git-widget-placeholder": "Jihwan",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
