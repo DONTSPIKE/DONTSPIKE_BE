@@ -5,15 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식 추가(식단 추가)">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/dontspike.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/dontspike.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/DTO/FrequentFoodDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/DTO/FrequentFoodDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/Food.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/Food.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/BloodSugar/BloodSugarService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Jihwan2" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -72,28 +75,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build DONTSPIKE_BE.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.dontspike 빌드.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.DontspikeApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;모듈&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build DONTSPIKE_BE.executor": "Run",
+    "Gradle.dontspike 빌드.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.DontspikeApplication.executor": "Run",
+    "git-widget-placeholder": "Jihwan2",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "모듈",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.boot.dontspike.DTO" />
