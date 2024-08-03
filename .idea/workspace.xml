@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식 추가(식단 추가)">
+    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식 추가(식단 추가), 자주먹은음식 1">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/dontspike.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/dontspike.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/DTO/FrequentFoodDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/DTO/FrequentFoodDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/Food.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/Food.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/Food/FoodService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +128,7 @@
       <updated>1722508872858</updated>
       <workItem from="1722508874419" duration="7214000" />
       <workItem from="1722659577429" duration="2265000" />
+      <workItem from="1722679988793" duration="7446000" />
     </task>
     <task id="LOCAL-00001" summary="음식관리, 푸드위키">
       <option name="closed" value="true" />
@@ -224,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722611152135</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="음식 추가(식단 추가), 자주먹은음식 1">
+      <option name="closed" value="true" />
+      <created>1722663086309</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1722663086309</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +261,9 @@
     <MESSAGE value="음식 검색, 자주먹은 음식 조회 수정" />
     <MESSAGE value="음식 검색, 자주먹은 음식 조회 수정1" />
     <MESSAGE value="음식 추가(식단 추가)" />
-    <option name="LAST_COMMIT_MESSAGE" value="음식 추가(식단 추가)" />
+    <MESSAGE value="음식 추가(식단 추가), 자주먹은 음식" />
+    <MESSAGE value="음식 추가(식단 추가), 자주먹은음식 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="음식 추가(식단 추가), 자주먹은음식 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
