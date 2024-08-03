@@ -20,4 +20,9 @@ public interface BloodSugarRepository extends JpaRepository<BloodSugar, Long> {
 
     Optional<Object> findByUserAndRecordDateBetween(User currentUser, LocalDateTime startOfDay, LocalDateTime endOfDay);
     Optional<BloodSugar> findFirstByUserAndRecordDateBetween(User user, LocalDateTime startOfDay, LocalDateTime endOfDay);
+
+    //해당 날짜가 같은 데이터가 있는지 찾는 메서드
+    @Query("SELECT b FROM BloodSugar b WHERE b.user.id = :userId AND FUNCTION('DATE_FORMAT', b.recordDate, '%Y-%m-%d') = FUNCTION('DATE_FORMAT', :recordDate, '%Y-%m-%d')")
+    Optional<BloodSugar> findByUserIdAndDay(@Param("userId") Long userId, @Param("recordDate") LocalDate recordDate);
+
 }
