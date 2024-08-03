@@ -3,7 +3,10 @@ package org.boot.dontspike.Food;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.boot.dontspike.BloodSugar.FoodBloodSugarMapping;
 import org.boot.dontspike.FoodWiki.Foodwiki;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,6 +42,9 @@ public class Food {
 
     @Column(name = "carbohydrate")
     private Double carbohydrate;
+
+    @OneToMany(mappedBy = "foodDataId")
+    private List<FoodBloodSugarMapping> foodBloodSugarMappings;
 
 
 
