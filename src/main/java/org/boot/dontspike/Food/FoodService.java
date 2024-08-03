@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -99,39 +100,16 @@ public class FoodService {
             return foodRepository.save(newFood);
         }
     }
-//    public List<FoodDto> getFoodsByBloodSugarDate(LocalDate recordDate) {
-//        LocalDateTime startOfDay = recordDate.atStartOfDay();
-//        LocalDateTime endOfDay = startOfDay.plusDays(1).minusNanos(1);
-//
-//        // BloodSugar 레코드를 날짜로 찾기
-//        List<BloodSugar> bloodSugars = bloodSugarRepository.findByUserIdAndDateRange(
-//                /* 사용자 ID를 제공하는 방법에 따라 변경 */
-//                1L,
-//                startOfDay,
-//                endOfDay
-//        );
-//
-//        if (bloodSugars.isEmpty()) {
-//            return Collections.emptyList();
-//        }
-//
-//        // 해당 날짜에 추가된 음식들을 조회
-//        List<Food> foods = foodBloodSugarMappingRepository.findFoodsByBloodSugarRecordDate(startOfDay);
-//
-//        // DTO로 변환
-//        return foods.stream()
-//                .map(food -> new FoodDto(food))
-//                .collect(Collectors.toList());
-//    }
+
 @Transactional
 public void addFoodToBloodSugarRecord(Long userId, Long foodId, LocalDate recordDate) {
     // 1. Food 엔티티 가져오기
     Food food = foodRepository.findById(foodId)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid food ID"));
+            .orElseThrow(() -> new IllegalArgumentException("음식을 찾을 수 없습니다."));
 
     // 2. 현재 사용자 가져오기
     User user = userRepository.findById(userId)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+            .orElseThrow(() -> new IllegalArgumentException("user를 찾을 수 없습니다."));
 
     // 3. 해당 날짜와 사용자에 대한 BloodSugar 기록 찾기
     LocalDateTime startOfDay = recordDate.atStartOfDay();
@@ -140,7 +118,7 @@ public void addFoodToBloodSugarRecord(Long userId, Long foodId, LocalDate record
     Optional<BloodSugar> optionalBloodSugar = bloodSugarRepository.findFirstByUserAndRecordDateBetween(user, startOfDay, endOfDay);
 
     if (optionalBloodSugar.isEmpty()) {
-        throw new IllegalArgumentException("No blood sugar record found for the given date");
+        throw new IllegalArgumentException("해당날짜에 혈당값이 존재하지 않습니다.");
     }
 
     BloodSugar bloodSugarRecord = optionalBloodSugar.get();
@@ -153,6 +131,12 @@ public void addFoodToBloodSugarRecord(Long userId, Long foodId, LocalDate record
     foodBloodSugarMappingRepository.save(mapping);
 }
 
+
+    public List<FrequentFoodDto> getFoodsEatenAtLeastFiveTimesInMonth(LocalDate month) {
+        LocalDateTime startDateTime = month.atStartOfDay(); // 월의 첫 날, 00:00
+        LocalDateTime endDateTime = month.plusMonths(1).atStartOfDay(); // 다음 달의 첫 날, 00:00
+        return foodRepository.findFoodsEatenAtLeastFiveTimesInMonth(startDateTime, endDateTime);
+    }
 }
 
 

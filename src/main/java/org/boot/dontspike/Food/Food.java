@@ -43,7 +43,7 @@ public class Food {
     @Column(name = "carbohydrate")
     private Double carbohydrate;
 
-    @OneToMany(mappedBy = "food")
+    @OneToMany(mappedBy = "foodDataId")
     private List<FoodBloodSugarMapping> foodBloodSugarMappings;
 
 
