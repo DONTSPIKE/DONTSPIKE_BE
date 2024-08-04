@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식 추가(식단 추가), 자주먹은음식 1">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/BloodSugar/BloodSugarRepository.class" afterDir="false" />
+    <list default="true" id="ea97f7ea-49ae-44af-bc03-6c01bc668fbc" name="변경" comment="음식 검색 수정">
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/boot/dontspike/Food/FoodService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/FoodWiki/Foodwiki.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/boot/dontspike/FoodWiki/Foodwiki.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +256,8 @@
     <MESSAGE value="음식 추가(식단 추가)" />
     <MESSAGE value="음식 추가(식단 추가), 자주먹은 음식" />
     <MESSAGE value="음식 추가(식단 추가), 자주먹은음식 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="음식 추가(식단 추가), 자주먹은음식 1" />
+    <MESSAGE value="음식 검색 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="음식 검색 수정" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
