@@ -15,7 +15,7 @@ echo "> Build 파일 복사"
 cp $REPOSITORY/$PROJECT_NAME/build/libs/*.jar $REPOSITORY/  #5
 
 echo "> 현재 구동중인 애플리케이션 pid 확인"
-CURRENT_PID=$(lsof -ti:80)     #6
+CURRENT_PID=$(lsof -ti:8080)     #6
 
 echo "현재 구동중인 애플리케이션 pid: $CURRENT_PID"
 
