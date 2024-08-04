@@ -30,6 +30,6 @@ public class Foodwiki {
     @Column(name = "ingestion_method", length = 300)
     private String ingestionMethod;
 
-    @Column(name = "GI")
-    private Double gi;
+    @Column(name = "GI", length = 300)
+    private String gi;
 }
