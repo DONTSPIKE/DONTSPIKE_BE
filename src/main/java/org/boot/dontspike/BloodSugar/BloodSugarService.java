@@ -4,15 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.boot.dontspike.Food.Food;
 import org.boot.dontspike.Food.FoodAlreadyExistsException;
 import org.boot.dontspike.User.User;
+import org.hibernate.graph.Graph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,8 +21,20 @@ public class BloodSugarService {
     public List<GraphDto> getGraph(Long userId){
         LocalDateTime endDate = LocalDateTime.now().plusDays(1);
         List<BloodSugar> bloodSugarList = repository.findByUserIdAndRecordDateBefore(userId, endDate);
-        return bloodSugarList.stream().map(bloodSugar -> new GraphDto(bloodSugar))
+        List<BloodSugar> lastSevenRecords = bloodSugarList.stream()
+                .sorted(Comparator.comparing(BloodSugar::getRecordDate).reversed()) // 날짜순으로 정렬
+                .limit(7) // 최근 7개 선택
                 .collect(Collectors.toList());
+
+        Double expectedBloodsugar = lastSevenRecords.stream()
+                .mapToDouble(BloodSugar::getBloodSugar)
+                .average()
+                .orElse(0);
+        GraphDto expectedGraph = new GraphDto(LocalDateTime.now().plusDays(1), expectedBloodsugar);
+        List<GraphDto> graphDtoList = bloodSugarList.stream().map(bloodSugar -> new GraphDto(bloodSugar))
+                .collect(Collectors.toList());
+        graphDtoList.add(expectedGraph);
+        return graphDtoList;
     }
     public Map<String, Double> getMonthlyAverages(Long userId, int year) {
         // 연도의 시작과 끝 날짜 계산
