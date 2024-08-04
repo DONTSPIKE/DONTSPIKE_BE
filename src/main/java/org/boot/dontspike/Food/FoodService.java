@@ -131,10 +131,10 @@ public void addFoodToBloodSugarRecord(Long userId, Long foodId, LocalDate record
 }
 
 
-    public List<FrequentFoodDto> getFoodsEatenAtLeastFiveTimesInMonth(LocalDate month) {
-        LocalDateTime startDateTime = month.atStartOfDay(); // 월의 첫 날, 00:00
-        LocalDateTime endDateTime = month.plusMonths(1).atStartOfDay(); // 다음 달의 첫 날, 00:00
-        return foodRepository.findFoodsEatenAtLeastFiveTimesInMonth(startDateTime, endDateTime);
+    public List<FrequentFoodDto> getFoodsEatenAtLeastFiveTimesInMonth(LocalDateTime startDate, LocalDateTime endDate) {
+        startDate = LocalDateTime.now().minusDays(30);
+        endDate = LocalDateTime.now(); // 다음 달의 첫 날, 00:00
+        return foodRepository.findFoodsEatenAtLeastFiveTimes(startDate, endDate);
     }
 }
 
