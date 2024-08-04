@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BloodSugarRepository extends JpaRepository<BloodSugar, Long> {
-    List<BloodSugar> findByUserIdAndRecordDateBefore(Long userId, LocalDateTime recordDate + 1);
+    List<BloodSugar> findByUserIdAndRecordDateBefore(Long userId, LocalDateTime recordDate);
     @Query("SELECT b FROM BloodSugar b WHERE b.user.id = :userId AND b.recordDate BETWEEN :startDate AND :endDate")
     List<BloodSugar> findByUserIdAndDateRange(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
     Optional<BloodSugar> findByUserAndRecordDate(User user, LocalDateTime recordDate);
