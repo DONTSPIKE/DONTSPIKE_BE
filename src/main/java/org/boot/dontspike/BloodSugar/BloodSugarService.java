@@ -19,7 +19,7 @@ public class BloodSugarService {
     private final BloodSugarRepository repository;
 
     public List<GraphDto> getGraph(Long userId){
-        LocalDateTime endDate = LocalDateTime.now().plusDays(1);
+        LocalDateTime endDate = LocalDateTime.now().toLocalDate().atStartOfDay().plusDays(1);
         List<BloodSugar> bloodSugarList = repository.findByUserIdAndRecordDateBefore(userId, endDate);
         List<BloodSugar> lastSevenRecords = bloodSugarList.stream()
                 .sorted(Comparator.comparing(BloodSugar::getRecordDate).reversed()) // 날짜순으로 정렬
