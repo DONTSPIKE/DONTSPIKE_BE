@@ -38,7 +38,6 @@ public class FoodService {
     private FoodBloodSugarMappingRepository FoodbloodSugarmappingRepository;
     @Autowired
     private FoodBloodSugarMappingRepository foodBloodSugarMappingRepository;
-
     @Autowired
     private UserRepository userRepository;
 
