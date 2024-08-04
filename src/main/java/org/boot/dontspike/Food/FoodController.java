@@ -52,9 +52,10 @@ public class FoodController {
     }
 
     @GetMapping("/api/food/favorites") // 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
-    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(@RequestParam("month") String month) {
-        LocalDate monthDate = LocalDate.parse(month + "-01"); // "YYYY-MM" 형식으로 입력 받음
-        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(monthDate);
+    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(LocalDateTime startDate, LocalDateTime endDate) {
+        startDate = LocalDateTime.now().minusDays(30);
+        endDate = LocalDateTime.now();
+        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(startDate, endDate);
         return ResponseEntity.ok(frequentFoods);
     }
 }
