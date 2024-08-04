@@ -7,13 +7,13 @@ import org.boot.dontspike.Food.Food;
 @Getter @Setter
 public class FoodDto {
     private String foodname;
-    private int foodId;
-    private double calorie;
-    private double protein;
-    private double fat;
-    private double sodium;
-    private double cholesterol;
-    private double carbohydrate;
+    private Integer foodId;
+    private Double calorie;
+    private Double protein;
+    private Double fat;
+    private Double sodium;
+    private Double cholesterol;
+    private Double carbohydrate;
 
     public FoodDto(Food food) {
     }
