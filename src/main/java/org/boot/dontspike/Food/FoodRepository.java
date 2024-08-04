@@ -17,10 +17,10 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 
     @Query("SELECT new org.boot.dontspike.DTO.FrequentFoodDto(f.foodDataId.fooddata_id, f.foodDataId.foodname, COUNT(f)) " +
             "FROM FoodBloodSugarMapping f " +
-            "WHERE f.bloodSugarRecordId.recordDate >= :startDateTime AND f.bloodSugarRecordId.recordDate < :endDateTime " +
+            "WHERE f.bloodSugarRecordId.recordDate >= :startDate AND f.bloodSugarRecordId.recordDate < :endDate " +
             "GROUP BY f.foodDataId.fooddata_id, f.foodDataId.foodname " +
             "HAVING COUNT(f) >= 5")
-    List<FrequentFoodDto> findFoodsEatenAtLeastFiveTimesInMonth(
-            @Param("startDateTime") LocalDateTime startDateTime,
-            @Param("endDateTime") LocalDateTime endDateTime);
+    List<FrequentFoodDto> findFoodsEatenAtLeastFiveTimes(
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate);
 }
