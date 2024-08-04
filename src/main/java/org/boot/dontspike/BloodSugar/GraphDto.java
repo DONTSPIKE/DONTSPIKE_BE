@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class GraphDto {
 
     private LocalDateTime recorddate;
-    private double bloodsugar;
+    private Double bloodsugar;
     private List<String> foodBsMappingId;
 
     public GraphDto(BloodSugar bloodSugar) {
@@ -27,5 +28,11 @@ public class GraphDto {
         this.foodBsMappingId = bloodSugar.getFoodBloodSugarMappings().stream()
                 .map(mapping -> mapping.getFoodDataId().getFoodname())
                 .collect(Collectors.toList());
+    }
+
+    public GraphDto(LocalDateTime recorddate, Double bloodsugar) {
+        this.recorddate = recorddate;
+        this.bloodsugar = bloodsugar;
+        this.foodBsMappingId = new ArrayList<>();
     }
 }
