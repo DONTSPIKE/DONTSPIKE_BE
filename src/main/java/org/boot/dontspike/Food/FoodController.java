@@ -30,17 +30,23 @@ public class FoodController {
         return foodService.getAllFood(name);
     }
 
-    @PostMapping("/api/food") //음식 직접 등록하기 -> 음식이름 받아서 food 엔티티에 추가(food에 이미 있으면 exception)
-    public ResponseEntity<String> createFood(@RequestBody String foodname) {
+    @PostMapping("/api/food") // 음식 직접 등록하기 -> 음식이름 받아서 food 엔티티에 추가(food에 이미 있으면 exception)
+    public ResponseEntity<String> createFood(@RequestBody Map<String, String> foodRequest) {
+        String foodname = foodRequest.get("foodname");
         Food createdFood = foodService.createFood(foodname);
         return new ResponseEntity<>("등록 되었습니다", HttpStatus.CREATED);
-        //Service에서 이미 등록된 음식입니다 처리
     }
+//    @PostMapping("/api/food") //음식 직접 등록하기 -> 음식이름 받아서 food 엔티티에 추가(food에 이미 있으면 exception)
+//    public ResponseEntity<String> createFood(@RequestBody String foodname) {
+//        Food createdFood = foodService.createFood(foodname);
+//        return new ResponseEntity<>("등록 되었습니다", HttpStatus.CREATED);
+//        //Service에서 이미 등록된 음식입니다 처리
+//    }
 
     @PostMapping("/api/diet/add-food") //음식 추가하기-> foodId랑 date 받고, 날짜별 음식 기록하기
     public void addFoodToBloodSugarRecord(
-            @RequestParam Long userId,
-            @RequestParam Long foodId,
+            @RequestParam ("userId")Long userId,
+            @RequestParam ("foodId")Long foodId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate recordDate) {
         foodService.addFoodToBloodSugarRecord(userId, foodId, recordDate);
     }
