@@ -24,7 +24,13 @@ if [ -z "$CURRENT_PID" ]; then            #7
 else
     echo "> kill -9 $CURRENT_PID"
     kill -9 $CURRENT_PID
-    sleep 5
+    # 포트가 해제될 때까지 대기
+    while lsof -ti:8080 >/dev/null; do
+        echo "> 포트 8080 해제 대기 중..."
+        sleep 1
+    done
+        echo "> 포트 8080 해제 완료"
+        sleep 5
 fi
 
 echo "> 새 애플리케이션 배포"
