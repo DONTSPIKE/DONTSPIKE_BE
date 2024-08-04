@@ -19,5 +19,5 @@ public class FoodDetailDto {
     private String expertOpinion;
     private String properIntake;
     private String ingestionMethod;
-    private double GI;
+    private String GI;
 }
