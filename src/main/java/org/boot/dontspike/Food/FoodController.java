@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,11 +52,19 @@ public class FoodController {
         foodService.addFoodToBloodSugarRecord(userId, foodId, recordDate);
     }
 
-    @GetMapping("/api/food/favorites") // 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
-    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(LocalDateTime startDate, LocalDateTime endDate) {
-        startDate = LocalDateTime.now().minusDays(30);
-        endDate = LocalDateTime.now();
-        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(startDate, endDate);
-        return ResponseEntity.ok(frequentFoods);
-    }
+
+    @GetMapping("/api/food/favorites")
+    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(
+        @RequestParam Long userId,
+        @RequestParam String startDate,
+        @RequestParam String endDate) {
+
+    // String으로 받은 날짜를 LocalDateTime으로 변환
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    LocalDateTime start = LocalDateTime.parse(startDate, formatter);
+    LocalDateTime end = LocalDateTime.parse(endDate, formatter);
+
+    List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(userId, start, end);
+    return ResponseEntity.ok(frequentFoods);
+}
 }
