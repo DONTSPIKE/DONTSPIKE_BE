@@ -1,10 +1,7 @@
 package org.boot.dontspike.BloodSugar;
 
 import lombok.RequiredArgsConstructor;
-import org.boot.dontspike.Food.Food;
-import org.boot.dontspike.Food.FoodAlreadyExistsException;
 import org.boot.dontspike.User.User;
-import org.hibernate.graph.Graph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

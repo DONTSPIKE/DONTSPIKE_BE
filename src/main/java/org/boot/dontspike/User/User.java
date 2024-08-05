@@ -17,10 +17,23 @@ import java.util.List;
 @Getter @Setter
 public class User {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    private String password;
+
     @OneToMany(mappedBy = "user")
     private List<BloodSugar> bloodSugars = new ArrayList<>();
+
+    //==유저 생성자 메서드==//
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User() {}
 }

@@ -1,4 +1,4 @@
-package org.boot.dontspike.Food;
+package org.boot.dontspike.Exception;
 
 public class FoodAlreadyExistsException extends RuntimeException {
     public FoodAlreadyExistsException(String s) {
