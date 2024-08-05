@@ -53,18 +53,12 @@ public class FoodController {
     }
 
 
-    @GetMapping("/api/food/favorites")
-    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(
-        @RequestParam Long userId,
-        @RequestParam String startDate,
-        @RequestParam String endDate) {
-
-    // String으로 받은 날짜를 LocalDateTime으로 변환
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    LocalDateTime start = LocalDateTime.parse(startDate, formatter);
-    LocalDateTime end = LocalDateTime.parse(endDate, formatter);
-
-    List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(userId, start, end);
-    return ResponseEntity.ok(frequentFoods);
-}
+    @GetMapping("/api/food/favorites/{user_id}") // 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
+    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(@PathVariable String user_id, LocalDateTime startDate, LocalDateTime endDate) {
+        startDate = LocalDateTime.now().minusDays(30);
+        endDate = LocalDateTime.now();
+        Long userId = Long.parseLong(user_id);
+        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(userId,startDate, endDate);
+        return ResponseEntity.ok(frequentFoods);
+    }
 }
