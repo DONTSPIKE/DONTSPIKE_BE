@@ -6,6 +6,7 @@ import org.boot.dontspike.BloodSugar.FoodBloodSugarMapping;
 import org.boot.dontspike.BloodSugar.FoodBloodSugarMappingRepository;
 import org.boot.dontspike.DTO.FoodDto;
 import org.boot.dontspike.DTO.FrequentFoodDto;
+import org.boot.dontspike.Exception.FoodAlreadyExistsException;
 import org.boot.dontspike.FoodWiki.FoodWikiRepository;
 import org.boot.dontspike.DTO.FoodDetailDto;
 import org.boot.dontspike.FoodWiki.Foodwiki;
@@ -17,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.YearMonth;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class FoodService {
