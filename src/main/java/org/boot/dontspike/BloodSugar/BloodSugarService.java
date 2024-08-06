@@ -24,11 +24,17 @@ public class BloodSugarService {
                 .limit(7) // 최근 7개 선택
                 .collect(Collectors.toList());
 
-        Double expectedBloodsugar = lastSevenRecords.stream()
-                .mapToDouble(BloodSugar::getBloodSugar)
-                .average()
-                .orElse(0);
-        GraphDto expectedGraph = new GraphDto(LocalDateTime.now().plusDays(1), expectedBloodsugar);
+
+        double totalWeight = 0;
+        double weightedSum = 0;
+        int weight = 1;
+        for (BloodSugar record : lastSevenRecords) {
+            weightedSum += record.getBloodSugar() * weight;
+            totalWeight += weight;
+            weight++;
+        }
+        Double expectedBloodSugar = totalWeight == 0 ? 0 : weightedSum / totalWeight;
+        GraphDto expectedGraph = new GraphDto(LocalDateTime.now().plusDays(1), expectedBloodSugar);
         List<GraphDto> graphDtoList = bloodSugarList.stream().map(bloodSugar -> new GraphDto(bloodSugar))
                 .collect(Collectors.toList());
         graphDtoList.add(expectedGraph);
