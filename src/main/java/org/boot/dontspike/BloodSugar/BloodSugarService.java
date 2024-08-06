@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class BloodSugarService {
     private final BloodSugarRepository repository;
 
+    // 아침 공복혈당 그래프 기능 조회 기능, 최근 날짜 7개 혈당값 평균으로 예상 혈당값 반영
     public List<GraphDto> getGraph(Long userId){
         LocalDateTime endDate = LocalDateTime.now().toLocalDate().atStartOfDay().plusDays(1);
         List<BloodSugar> bloodSugarList = repository.findByUserIdAndRecordDateBefore(userId, endDate);
@@ -33,6 +34,8 @@ public class BloodSugarService {
         graphDtoList.add(expectedGraph);
         return graphDtoList;
     }
+
+    //월별 혈당 평균값 조회
     public Map<String, Double> getMonthlyAverages(Long userId, int year) {
         // 연도의 시작과 끝 날짜 계산
         LocalDateTime startOfYear = LocalDateTime.of(year, 1, 1, 0, 0);
@@ -58,6 +61,7 @@ public class BloodSugarService {
         return sortedMonthlyAverages;
     }
 
+    //혈당값 기록, 식단이 먼저 기록되어있으면 Update, Else Create
     @Transactional
     public void createOrUpdateBloodSugar(User user, LocalDateTime date, Double bloodSugar) {
         LocalDate findDate = date.toLocalDate();
