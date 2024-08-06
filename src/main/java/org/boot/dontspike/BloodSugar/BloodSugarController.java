@@ -17,6 +17,8 @@ import java.util.Map;
 public class BloodSugarController {
 
     private final BloodSugarService bloodSugarService;
+
+    //아침 공복 혈당 그래프 조회
     @GetMapping("/api/blood-sugar/food/{user_id}")
     public ResponseEntity<List<GraphDto>> getGraph(@PathVariable String user_id) {
         try {
@@ -27,6 +29,7 @@ public class BloodSugarController {
         }
     }
 
+    //월별 혈당 평균값 조회
     @GetMapping("/api/blood-sugar/average")
     public Map<String, Object> getMonthlyAverages(
             @RequestParam("user_id") Long userId,
@@ -39,6 +42,7 @@ public class BloodSugarController {
         );
     }
 
+    //혈당값 기록
     @PostMapping("/api/{user_id}/blood-sugar")
     public ResponseEntity<?> createBloodsugar(@PathVariable String user_id, @RequestParam("date") String date, @RequestParam("bloodsugar") Double bloodSugar) {
         try {
