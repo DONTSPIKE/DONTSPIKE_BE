@@ -47,3 +47,5 @@ out/
 *.bin
 *.xml
 
+application.properties
+application-API-KEY.properties
