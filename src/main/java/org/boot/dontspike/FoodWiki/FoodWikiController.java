@@ -16,9 +16,11 @@ import java.util.List;
 public class FoodWikiController {
     @Autowired
     private FoodService foodService;
+    @Autowired
+    private org.boot.dontspike.OpenAI.gptService gptService;
 
     @GetMapping("/api/foodwiki") //푸드위키 음식 검색 -> 음식 입력 받으면 음식 정보랑 전문가 의견, 섭취 방법 등이 출력
-    public List<FoodDetailDto> getFoodWiki(@RequestParam("search_food") String name) {
-        return foodService.searchFoodDetailsByName(name); //FoodDetailDto-> food랑 foodwiki 데이터가 합쳐진 애가 return
+    public FoodDetailDto getFoodWiki(@RequestParam("search_food") String name) {
+        return gptService.getFoodDetails(name);//FoodDetailDto-> food랑 foodwiki 데이터가 합쳐진 애가 return
     }
 }
