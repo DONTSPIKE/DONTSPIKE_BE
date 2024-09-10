@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,13 +36,44 @@ public class gptService {
     private final FoodWikiRepository foodWikiRepository;
     private final FoodRepository foodRepository;
 
-
     public gptService(FoodWikiRepository foodWikiRepository, FoodRepository foodRepository) {
         this.foodWikiRepository = foodWikiRepository;
         this.foodRepository = foodRepository;
     }
 
-    public FoodDetailDto getFoodDetails(String foodName) {
+    public List<FoodDetailDto> getFoodDetails(String foodName) {
+        List<FoodDetailDto> foodDetailDtos = new ArrayList<>();
+
+        // 먼저 DB에서 해당 음식 정보를 확인
+        List<Food> existingFoods = foodRepository.findByFoodnameContaining(foodName);
+
+        if (!existingFoods.isEmpty()) {
+            // 이미 DB에 있으면 해당 데이터를 List로 반환
+            for (Food food : existingFoods) {
+                Foodwiki foodwiki = foodWikiRepository.findByFood(food);
+
+                if (foodwiki != null) {
+                    FoodDetailDto dto = new FoodDetailDto();
+                    dto.setFoodname(food.getFoodname());
+                    dto.setAmount(food.getAmount());
+                    dto.setCalorie(food.getCalorie());
+                    dto.setProtein(food.getProtein());
+                    dto.setFat(food.getFat());
+                    dto.setSodium(food.getSodium());
+                    dto.setCholesterol(food.getCholesterol());
+                    dto.setCarbohydrate(food.getCarbohydrate());
+                    dto.setExpertOpinion(foodwiki.getExpertOpinion());
+                    dto.setProperIntake(foodwiki.getProperIntake());
+                    dto.setIngestionMethod(foodwiki.getIngestionMethod());
+                    dto.setGI(foodwiki.getGi());
+
+                    foodDetailDtos.add(dto);
+                }
+            }
+            return foodDetailDtos; // DB에서 가져온 데이터를 반환
+        }
+
+        // DB에 없으면 GPT API 호출
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = String.format(
                 "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요. 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요 포함할 내용: " +
@@ -84,19 +116,19 @@ public class gptService {
                             FoodDetailDto dto = parseFoodDetails(result);
                             dto.setFoodname(foodName); // 검색한 음식 이름 설정
                             saveFoodDetailsToDB(dto);
-                            return dto;
+                            foodDetailDtos.add(dto); // 새로 얻은 데이터를 리스트에 추가
                         } else {
                             // 기본 값 반환 또는 재시도 로직
                             logger.warn("Unexpected response received: {}", contentObj);
-                            return new FoodDetailDto();
                         }
                     }
                 }
             }
         }
 
-        return new FoodDetailDto();
+        return foodDetailDtos; // 새로 가져온 데이터를 반환
     }
+
     private void saveFoodDetailsToDB(FoodDetailDto dto) {
         // Food 엔티티 생성 및 저장
         Food food = new Food();
@@ -123,7 +155,6 @@ public class gptService {
         // Foodwiki 엔티티 저장
         foodWikiRepository.save(foodwiki);
     }
-
 
     private FoodDetailDto parseFoodDetails(String response) {
         String[] lines = response.split("\n");
@@ -182,7 +213,6 @@ public class gptService {
                             dto.setGI(value);
                             break;
                         default:
-                            // 해당하는 키가 없으면 무시
                             break;
                     }
                 }
