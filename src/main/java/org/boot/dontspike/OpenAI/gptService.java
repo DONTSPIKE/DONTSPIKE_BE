@@ -1,6 +1,10 @@
 package org.boot.dontspike.OpenAI;
 
 import org.boot.dontspike.DTO.FoodDetailDto;
+import org.boot.dontspike.Food.Food;
+import org.boot.dontspike.Food.FoodRepository;
+import org.boot.dontspike.FoodWiki.FoodWikiRepository;
+import org.boot.dontspike.FoodWiki.Foodwiki;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +32,14 @@ public class gptService {
     private String apiKey;
 
     private final RestTemplate restTemplate = new RestTemplate();
+    private final FoodWikiRepository foodWikiRepository;
+    private final FoodRepository foodRepository;
+
+
+    public gptService(FoodWikiRepository foodWikiRepository, FoodRepository foodRepository) {
+        this.foodWikiRepository = foodWikiRepository;
+        this.foodRepository = foodRepository;
+    }
 
     public FoodDetailDto getFoodDetails(String foodName) {
         String apiUrl = "https://api.openai.com/v1/chat/completions";
@@ -38,7 +50,6 @@ public class gptService {
                         "적정 섭취량(string), 섭취 방법(string), 혈당 지수(string).",
                 foodName
         );
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -72,6 +83,7 @@ public class gptService {
                             String result = contentObj.toString().trim();
                             FoodDetailDto dto = parseFoodDetails(result);
                             dto.setFoodname(foodName); // 검색한 음식 이름 설정
+                            saveFoodDetailsToDB(dto);
                             return dto;
                         } else {
                             // 기본 값 반환 또는 재시도 로직
@@ -85,6 +97,33 @@ public class gptService {
 
         return new FoodDetailDto();
     }
+    private void saveFoodDetailsToDB(FoodDetailDto dto) {
+        // Food 엔티티 생성 및 저장
+        Food food = new Food();
+        food.setFoodname(dto.getFoodname());
+        food.setAmount(dto.getAmount());
+        food.setCalorie(dto.getCalorie());
+        food.setProtein(dto.getProtein());
+        food.setFat(dto.getFat());
+        food.setSodium(dto.getSodium());
+        food.setCholesterol(dto.getCholesterol());
+        food.setCarbohydrate(dto.getCarbohydrate());
+
+        // 먼저 저장하여 food_id를 생성
+        Food savedFood = foodRepository.save(food);
+
+        // Foodwiki 엔티티 생성 및 저장
+        Foodwiki foodwiki = new Foodwiki();
+        foodwiki.setFooddataId(savedFood.getFooddata_id());  // 새로 생성된 food의 ID를 사용
+        foodwiki.setExpertOpinion(dto.getExpertOpinion());
+        foodwiki.setProperIntake(dto.getProperIntake());
+        foodwiki.setIngestionMethod(dto.getIngestionMethod());
+        foodwiki.setGi(dto.getGI());
+
+        // Foodwiki 엔티티 저장
+        foodWikiRepository.save(foodwiki);
+    }
+
 
     private FoodDetailDto parseFoodDetails(String response) {
         String[] lines = response.split("\n");
