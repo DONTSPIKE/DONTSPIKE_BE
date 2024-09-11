@@ -1,6 +1,7 @@
 package org.boot.dontspike.Food;
 
 import lombok.Getter;
+import org.boot.dontspike.BloodSugar.BloodSugarAnalysisDto;
 import org.boot.dontspike.DTO.FoodDto;
 
 //import org.boot.dontspike.DTO.FrequentFoodDto;
@@ -25,6 +26,8 @@ import java.util.Map;
 public class FoodController {
     @Autowired
     private FoodService foodService;
+    @Autowired
+    private org.boot.dontspike.OpenAI.gptService gptService;
 
     @GetMapping("/api/food") //음식 검색-> 음식이름 받으면 그 음식에 대한 정보 출력
     public List<FoodDto> getFood(@RequestParam("search_food")String name) {
@@ -53,12 +56,16 @@ public class FoodController {
     }
 
 
-    @GetMapping("/api/food/favorites/{user_id}") // 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
-    public ResponseEntity<List<FrequentFoodDto>> getFoodsEatenAtLeastFiveTimesInMonth(@PathVariable String user_id, LocalDateTime startDate, LocalDateTime endDate) {
+    @GetMapping("/api/food/favorites/{user_id}") // 최근 30일간 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
+    public ResponseEntity<Map<String, Object>> getFoodsEatenAtLeastFiveTimesInMonth(@PathVariable String user_id, LocalDateTime startDate, LocalDateTime endDate) {
         startDate = LocalDateTime.now().minusDays(30);
         endDate = LocalDateTime.now();
         Long userId = Long.parseLong(user_id);
         List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(userId,startDate, endDate);
-        return ResponseEntity.ok(frequentFoods);
+        FrequentAnalysisDto analysisDto =gptService.getFrequentAnalysis(userId,startDate,endDate);
+        Map<String, Object> response = new HashMap<>();
+        response.put("frequentFoods", frequentFoods);
+        response.put("analysisDto", analysisDto);
+        return ResponseEntity.ok(response);
     }
 }

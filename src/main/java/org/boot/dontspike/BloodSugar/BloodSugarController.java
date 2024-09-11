@@ -17,6 +17,7 @@ import java.util.Map;
 public class BloodSugarController {
 
     private final BloodSugarService bloodSugarService;
+    private final org.boot.dontspike.OpenAI.gptService gptService;
 
     //아침 공복 혈당 그래프 조회
     @GetMapping("/api/blood-sugar/food/{user_id}")
@@ -35,10 +36,12 @@ public class BloodSugarController {
             @RequestParam("user_id") Long userId,
             @RequestParam("year") int year) {
         Map<String, Double> averages = bloodSugarService.getMonthlyAverages(userId, year);
+        BloodSugarAnalysisDto analysisDto=gptService.getMonthlyBloodSugarAnalysis(userId,year);
         return Map.of(
                 "user_id", userId,
                 "year", year,
-                "monthly_averages", averages
+                "monthly_averages", averages,
+                "analysis", analysisDto.getAnalysis()
         );
     }
 
