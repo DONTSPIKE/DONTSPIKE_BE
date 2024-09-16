@@ -18,7 +18,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.client.RestTemplate;
 
 import org.slf4j.Logger;
@@ -102,10 +104,10 @@ public class gptService {
 
     //월별 공복 혈당 분석해서 코맨트 가져오는 코드
     public BloodSugarAnalysisDto getMonthlyBloodSugarAnalysis(Long userId, int year) {
-        // 데이터베이스에서 사용자의 월별 혈당 데이터를 가져옵니다.
+        // 데이터베이스에서 사용자의 월별 혈당 데이터를 가져옴
         Map<String, Double> monthlyAverages = bloodSugarService.getMonthlyAverages(userId, year);
 
-        // 월별 혈당 평균 값을 GPT API로 분석 요청합니다.
+        // 월별 혈당 평균 값을 GPT API로 분석 요청
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = createBloodSugarAnalysisPrompt(monthlyAverages, year);
 
@@ -278,7 +280,7 @@ public class gptService {
         return new FoodDetailDto();
     }
 
-    //db에 옮기기
+
     private void saveFoodDetailsToDB(FoodDetailDto dto) {
         // Food 엔티티 생성 및 저장
         Food food = new Food();
@@ -305,6 +307,7 @@ public class gptService {
         // Foodwiki 엔티티 저장
         foodWikiRepository.save(foodwiki);
     }
+
 
 
     //FoodDetail 변환
@@ -366,6 +369,7 @@ public class gptService {
                             break;
                         default:
                             // 해당하는 키가 없으면 무시
+
                             break;
                     }
                 }
