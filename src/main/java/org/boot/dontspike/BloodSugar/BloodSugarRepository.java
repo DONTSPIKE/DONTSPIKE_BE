@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface BloodSugarRepository extends JpaRepository<BloodSugar, Long> {
@@ -23,4 +24,9 @@ public interface BloodSugarRepository extends JpaRepository<BloodSugar, Long> {
     @Query("SELECT b FROM BloodSugar b WHERE b.user.id = :userId AND FUNCTION('DATE_FORMAT', b.recordDate, '%Y-%m-%d') = FUNCTION('DATE_FORMAT', :recordDate, '%Y-%m-%d')")
     Optional<BloodSugar> findByUserIdAndDay(@Param("userId") Long userId, @Param("recordDate") LocalDate recordDate);
 
+//    @Query(value = "SELECT MONTH(record_date) AS month, AVG(value) AS average " +
+//            "FROM blood_sugar " +
+//            "WHERE user_id = :userId AND YEAR(record_date) = :year " +
+//            "GROUP BY MONTH(record_date)", nativeQuery = true)
+//    Map<Integer, Double> getMonthlyAverages(@Param("userId") Long userId, @Param("year") int year);
 }

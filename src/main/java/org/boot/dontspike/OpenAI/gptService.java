@@ -1,8 +1,15 @@
 package org.boot.dontspike.OpenAI;
 
+import org.apache.catalina.users.SparseUserDatabase;
+import org.boot.dontspike.BloodSugar.BloodSugarAnalysisDto;
+import org.boot.dontspike.BloodSugar.BloodSugarRepository;
+import org.boot.dontspike.BloodSugar.BloodSugarService;
 import org.boot.dontspike.DTO.FoodDetailDto;
+import org.boot.dontspike.DTO.FrequentFoodDto;
 import org.boot.dontspike.Food.Food;
 import org.boot.dontspike.Food.FoodRepository;
+import org.boot.dontspike.Food.FoodService;
+import org.boot.dontspike.Food.FrequentAnalysisDto;
 import org.boot.dontspike.FoodWiki.FoodWikiRepository;
 import org.boot.dontspike.FoodWiki.Foodwiki;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,11 +18,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.client.RestTemplate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,45 +46,181 @@ public class gptService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final FoodWikiRepository foodWikiRepository;
     private final FoodRepository foodRepository;
+    private final BloodSugarRepository bloodSugarRepository;
+    private final BloodSugarService bloodSugarService;
+    private final FoodService foodService;
 
-    public gptService(FoodWikiRepository foodWikiRepository, FoodRepository foodRepository) {
+
+    public gptService(FoodWikiRepository foodWikiRepository, FoodRepository foodRepository, BloodSugarRepository bloodSugarRepository, BloodSugarService bloodSugarService, FoodService foodService, FoodService foodService1, FoodService foodService2) {
         this.foodWikiRepository = foodWikiRepository;
         this.foodRepository = foodRepository;
+        this.bloodSugarRepository = bloodSugarRepository;
+        this.bloodSugarService = bloodSugarService;
+
+        this.foodService = foodService;
     }
 
-    public List<FoodDetailDto> getFoodDetails(String foodName) {
-        List<FoodDetailDto> foodDetailDtos = new ArrayList<>();
 
-        // 먼저 DB에서 해당 음식 정보를 확인
-        List<Food> existingFoods = foodRepository.findByFoodnameContaining(foodName);
 
-        if (!existingFoods.isEmpty()) {
-            // 이미 DB에 있으면 해당 데이터를 List로 반환
-            for (Food food : existingFoods) {
-                Foodwiki foodwiki = foodWikiRepository.findByFood(food);
+    //자주 먹은 음식 리스트 가져와서 분석하는 코드
+    public FrequentAnalysisDto getFrequentAnalysis(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+        // 최근 30일 동안 자주 섭취한 음식 가져오기
+        List<FrequentFoodDto> frequentFood = foodService.getFoodsEatenAtLeastFiveTimesInMonth(userId, startDate, endDate);
 
-                if (foodwiki != null) {
-                    FoodDetailDto dto = new FoodDetailDto();
-                    dto.setFoodname(food.getFoodname());
-                    dto.setAmount(food.getAmount());
-                    dto.setCalorie(food.getCalorie());
-                    dto.setProtein(food.getProtein());
-                    dto.setFat(food.getFat());
-                    dto.setSodium(food.getSodium());
-                    dto.setCholesterol(food.getCholesterol());
-                    dto.setCarbohydrate(food.getCarbohydrate());
-                    dto.setExpertOpinion(foodwiki.getExpertOpinion());
-                    dto.setProperIntake(foodwiki.getProperIntake());
-                    dto.setIngestionMethod(foodwiki.getIngestionMethod());
-                    dto.setGI(foodwiki.getGi());
+        // 프롬프트 생성
+        String prompt = createFrequentFoodAnalysisPrompt(frequentFood, startDate.getYear(), startDate.getMonth().toString());
 
-                    foodDetailDtos.add(dto);
+        String apiUrl = "https://api.openai.com/v1/chat/completions";
+
+        Map<String, Object> responseBody=gpt(apiUrl,prompt);
+
+        // 응답에서 분석 결과 추출
+        if (responseBody != null) {
+            Object choicesObj = responseBody.get("choices");
+            if (choicesObj instanceof List) {
+                List<?> choicesList = (List<?>) choicesObj;
+                if (!choicesList.isEmpty() && choicesList.get(0) instanceof Map) {
+                    Map<?, ?> firstChoice = (Map<?, ?>) choicesList.get(0);
+                    Object messageObj = firstChoice.get("message");
+                    if (messageObj instanceof Map) {
+                        Map<?, ?> messageMap = (Map<?, ?>) messageObj;
+                        Object contentObj = messageMap.get("content");
+                        if (contentObj != null && !contentObj.toString().contains("Hello!")) {
+                            String result = contentObj.toString().trim();
+                            FrequentAnalysisDto dto = parseFrequentAnalysis(result);
+
+                            return dto;
+                        } else {
+                            logger.warn("Unexpected response received: {}", contentObj);
+                            return new FrequentAnalysisDto();
+                        }
+                    }
                 }
             }
-            return foodDetailDtos; // DB에서 가져온 데이터를 반환
         }
 
-        // DB에 없으면 GPT API 호출
+        return new FrequentAnalysisDto();
+    }
+
+    //월별 공복 혈당 분석해서 코맨트 가져오는 코드
+    public BloodSugarAnalysisDto getMonthlyBloodSugarAnalysis(Long userId, int year) {
+        // 데이터베이스에서 사용자의 월별 혈당 데이터를 가져옴
+        Map<String, Double> monthlyAverages = bloodSugarService.getMonthlyAverages(userId, year);
+
+        // 월별 혈당 평균 값을 GPT API로 분석 요청
+        String apiUrl = "https://api.openai.com/v1/chat/completions";
+        String prompt = createBloodSugarAnalysisPrompt(monthlyAverages, year);
+
+        Map<String, Object> responseBody=gpt(apiUrl, prompt);
+
+
+        if (responseBody != null) {
+            Object choicesObj = responseBody.get("choices");
+            if (choicesObj instanceof List) {
+                List<?> choicesList = (List<?>) choicesObj;
+                if (!choicesList.isEmpty() && choicesList.get(0) instanceof Map) {
+                    Map<?, ?> firstChoice = (Map<?, ?>) choicesList.get(0);
+                    Object messageObj = firstChoice.get("message");
+                    if (messageObj instanceof Map) {
+                        Map<?, ?> messageMap = (Map<?, ?>) messageObj;
+                        Object contentObj = messageMap.get("content");
+                        if (contentObj != null && !contentObj.toString().contains("Hello!")) {
+                            String result = contentObj.toString().trim();
+                            BloodSugarAnalysisDto dto = parseBloodSugarAnalysis(result);
+
+                            return dto;
+                        } else {
+                            logger.warn("Unexpected response received: {}", contentObj);
+                            return new BloodSugarAnalysisDto();
+                        }
+                    }
+                }
+            }
+        }
+
+        return new BloodSugarAnalysisDto();
+    }
+
+// 자주 섭취한 음식 데이터를 기반으로 프롬프트 생성
+    private String createFrequentFoodAnalysisPrompt(List<FrequentFoodDto> frequentFood, int year, String month) {
+        StringBuilder prompt = new StringBuilder();
+
+    // 프롬프트 기본 정보 추가
+        prompt.append(String.format("다음은 %d년 %s 동안 사용자가 자주 섭취한 음식 목록입니다. ", year, month));
+        prompt.append("이 목록을 바탕으로 사용자의 식습관에 대해 분석하고 개선할 수 있는 팁을 제공해 주세요.\n\n");
+
+    // 음식 목록 추가
+        prompt.append("자주 섭취한 음식 목록:\n");
+        for (FrequentFoodDto food : frequentFood) {
+        prompt.append(String.format("- %s: %d회 섭취\n", food.getFoodName(), food.getCount()));
+    }
+
+    // 분석 요청 추가
+        prompt.append("자주 섭취한 음식 목록을 분석해서 주로 어떤걸 먹었는지 알려주세요.");
+        prompt.append("자주 섭취한 음식을 보고, 식습관에 대한 개선 팁을 제시해주세요");
+
+//        prompt.append("1. 사용자의 식습관 분석\n");
+//        prompt.append("2. 섭취 빈도가 높은 음식에 대한 건강 분석\n");
+//        prompt.append("3. 건강한 식습관을 위한 개선 팁 제시\n");
+
+        return prompt.toString();
+}
+    // GPT에게 보낼 프롬프트 생성 (월별 혈당 데이터를 기반으로 분석 요청)
+    private String createBloodSugarAnalysisPrompt(Map<String, Double> monthlyAverages, int year) {
+        StringBuilder prompt = new StringBuilder();
+        prompt.append(String.format("다음은 %d년 사용자의 월별 공복 혈당 수치입니다. 월별 공복 혈당 수치를 비교하여 변화와 분석을 제공해 주세요.\n", year));
+        prompt.append("월별 공복 혈당 수치:\n");
+
+        for (Map.Entry<String, Double> entry : monthlyAverages.entrySet()) {
+            prompt.append(String.format("%s: %.2f mg/dl\n", entry.getKey(), entry.getValue()));
+        }
+
+        prompt.append("\n분석 결과와 권장 사항을 제공해 주세요(혈당 수치가 0인 달은 분석하지 말아주세요): \n");
+        prompt.append("1. 혈당 수치 변화에 대한 설명\n");
+        prompt.append("2. 지난달 대비 혈당이 증가한 경우 생활습관 점검 및 전문가 상담 권장\n");
+        prompt.append("3. 건강 유지 위한 작은 변화와 실천 팁\n");
+
+        return prompt.toString();
+    }
+
+    // GPT로부터 받은 응답을 DTO로 파싱 - 월별 공복 혈당
+    private BloodSugarAnalysisDto parseBloodSugarAnalysis(String response) {
+        BloodSugarAnalysisDto dto = new BloodSugarAnalysisDto();
+        dto.setAnalysis(response);
+        return dto;
+    }
+    //gpt로부터 받은 응답 DTO로 파싱 - 자주 먹은 음식 분석
+    private FrequentAnalysisDto parseFrequentAnalysis(String response) {
+        FrequentAnalysisDto dto = new FrequentAnalysisDto();
+        dto.setAnalysis(response);
+        return dto;
+    }
+
+    //gpt api 호출 시 중복 처리
+    public Map<String, Object> gpt(String apiUrl, String prompt){
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("model", "gpt-3.5-turbo");
+        body.put("messages", List.of(
+                Map.of("role", "user", "content", prompt)
+        ));
+        body.put("max_tokens", 500);
+
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+
+        // API 호출
+        ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, request, Map.class);
+        Map<String, Object> responseBody = response.getBody();
+
+        logger.info("API Response: {}", responseBody);
+        return responseBody;
+    }
+
+    //foodwiki 내용 받아오는 코드
+    public FoodDetailDto getFoodDetails(String foodName) {
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = String.format(
                 "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요. 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요 포함할 내용: " +
@@ -82,6 +229,7 @@ public class gptService {
                         "적정 섭취량(string), 섭취 방법(string), 혈당 지수(string).",
                 foodName
         );
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -114,20 +262,24 @@ public class gptService {
                         if (contentObj != null && !contentObj.toString().contains("Hello!")) {
                             String result = contentObj.toString().trim();
                             FoodDetailDto dto = parseFoodDetails(result);
-                            dto.setFoodname(foodName); // 검색한 음식 이름 설정
+                            dto.setFoodname(foodName);// 검색한 음식 이름 설정
+
                             saveFoodDetailsToDB(dto);
-                            foodDetailDtos.add(dto); // 새로 얻은 데이터를 리스트에 추가
+
+                            return dto;
                         } else {
                             // 기본 값 반환 또는 재시도 로직
                             logger.warn("Unexpected response received: {}", contentObj);
+                            return new FoodDetailDto();
                         }
                     }
                 }
             }
         }
 
-        return foodDetailDtos; // 새로 가져온 데이터를 반환
+        return new FoodDetailDto();
     }
+
 
     private void saveFoodDetailsToDB(FoodDetailDto dto) {
         // Food 엔티티 생성 및 저장
@@ -156,6 +308,9 @@ public class gptService {
         foodWikiRepository.save(foodwiki);
     }
 
+
+
+    //FoodDetail 변환
     private FoodDetailDto parseFoodDetails(String response) {
         String[] lines = response.split("\n");
         FoodDetailDto dto = new FoodDetailDto();
@@ -213,6 +368,8 @@ public class gptService {
                             dto.setGI(value);
                             break;
                         default:
+                            // 해당하는 키가 없으면 무시
+
                             break;
                     }
                 }
