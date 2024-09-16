@@ -46,6 +46,6 @@ out/
 *.lock
 *.bin
 *.xml
-
+secret
 application-API-KEY.properties
 
