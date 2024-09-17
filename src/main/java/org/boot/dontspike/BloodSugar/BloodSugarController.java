@@ -39,6 +39,7 @@ public class BloodSugarController {
         return Map.of(
                 "user_id", userId,
                 "year", year,
+                "monthly_averages", averages
         );
     }
 
