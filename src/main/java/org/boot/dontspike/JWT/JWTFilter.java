@@ -37,6 +37,9 @@ public class JWTFilter extends OncePerRequestFilter {
                 }
             }
         }
+        else {
+            System.out.println("No cookies received.");
+        }
 
         // Authorization 헤더 검증
         if (authorization == null) {
@@ -58,6 +61,7 @@ public class JWTFilter extends OncePerRequestFilter {
         // 토큰에서 username, role 획득
         String username = jwtUtil.getUsername(token);
         String role = jwtUtil.getRole(token);
+        System.out.println("Extracted from token - username: " + username + ", role: " + role);
 
         // userDTO를 생성하여 값 설정
         UserDTO userDTO = new UserDTO();
