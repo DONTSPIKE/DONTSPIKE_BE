@@ -50,7 +50,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         Cookie cookie = new Cookie(key, value); //쿠키 선언및 생성
         cookie.setMaxAge(60 * 60 * 60);
-        //cookie.setSecure(true); -> https통신에서만 쿠키사용가능한 코드
+        cookie.setSecure(true); //-> https통신에서만 쿠키사용가능한 코드
         cookie.setPath("/"); //쿠키는 모든 전역에서 보일수있음
         cookie.setHttpOnly(true); //자바스크립트가 가져갈수없게
 
