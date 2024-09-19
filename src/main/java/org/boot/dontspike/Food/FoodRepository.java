@@ -16,14 +16,14 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     Optional<Food> findByFoodname(String foodname);
 
 
-@Query("SELECT new org.boot.dontspike.DTO.FrequentFoodDto(f.foodDataId.fooddata_id, f.foodDataId.foodname, COUNT(f)) " +
-        "FROM FoodBloodSugarMapping f " +
-        "WHERE f.bloodSugarRecordId.user.id= :userId AND f.bloodSugarRecordId.recordDate >= :startDate AND f.bloodSugarRecordId.recordDate < :endDate " +
-        "GROUP BY f.foodDataId.fooddata_id, f.foodDataId.foodname " +
-        "HAVING COUNT(f) >= 5")
-List<FrequentFoodDto> findFoodsEatenAtLeastFiveTimes(
-        @Param("userId") Long userId,
-        @Param("startDate") LocalDateTime startDate,
-        @Param("endDate") LocalDateTime endDate);
+    @Query("SELECT new org.boot.dontspike.DTO.FrequentFoodDto(f.foodDataId.fooddata_id, f.foodDataId.foodname, COUNT(f)) " +
+            "FROM FoodBloodSugarMapping f " +
+            "WHERE f.bloodSugarRecordId.user.username = :username AND f.bloodSugarRecordId.recordDate >= :startDate AND f.bloodSugarRecordId.recordDate < :endDate " +
+            "GROUP BY f.foodDataId.fooddata_id, f.foodDataId.foodname " +
+            "HAVING COUNT(f) >= 5")
+    List<FrequentFoodDto> findFoodsEatenAtLeastFiveTimes(
+            @Param("username") String username,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate);
 
 }

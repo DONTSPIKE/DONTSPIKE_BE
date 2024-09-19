@@ -99,14 +99,13 @@ public class FoodService {
     }
 
 @Transactional
-public void addFoodToBloodSugarRecord(Long userId, Long foodId, LocalDate recordDate) {
+public void addFoodToBloodSugarRecord(String username, Long foodId, LocalDate recordDate) {
     // 1. Food 엔티티 가져오기
     Food food = foodRepository.findById(foodId)
             .orElseThrow(() -> new IllegalArgumentException("음식을 찾을 수 없습니다."));
 
     // 2. 현재 사용자 가져오기
-    User user = userRepository.findById(userId)
-            .orElseThrow(() -> new IllegalArgumentException("user를 찾을 수 없습니다."));
+    User user = userRepository.findByUsername(username);
 
     // 3. 해당 날짜와 사용자에 대한 BloodSugar 기록 찾기
     LocalDateTime startOfDay = recordDate.atStartOfDay();
@@ -129,10 +128,10 @@ public void addFoodToBloodSugarRecord(Long userId, Long foodId, LocalDate record
 }
 
 
-    public List<FrequentFoodDto> getFoodsEatenAtLeastFiveTimesInMonth(Long userId,LocalDateTime startDate, LocalDateTime endDate) {
+    public List<FrequentFoodDto> getFoodsEatenAtLeastFiveTimesInMonth(String username,LocalDateTime startDate, LocalDateTime endDate) {
         startDate = LocalDateTime.now().minusDays(30);
         endDate = LocalDateTime.now(); // 다음 달의 첫 날, 00:00
-        return foodRepository.findFoodsEatenAtLeastFiveTimes(userId, startDate, endDate);
+        return foodRepository.findFoodsEatenAtLeastFiveTimes(username, startDate, endDate);
     }
 }
 
