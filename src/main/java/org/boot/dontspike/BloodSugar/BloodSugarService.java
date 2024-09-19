@@ -16,9 +16,9 @@ public class BloodSugarService {
     private final BloodSugarRepository repository;
 
     // 아침 공복혈당 그래프 기능 조회 기능, 최근 날짜 7개 혈당값 평균으로 예상 혈당값 반영
-    public List<GraphDto> getGraph(Long userId){
+    public List<GraphDto> getGraph(String username){
         LocalDateTime endDate = LocalDateTime.now().toLocalDate().atStartOfDay().plusDays(1);
-        List<BloodSugar> bloodSugarList = repository.findByUserIdAndRecordDateBefore(userId, endDate);
+        List<BloodSugar> bloodSugarList = repository.findByUserUsernameAndRecordDateBefore(username, endDate);
         List<BloodSugar> lastSevenRecords = bloodSugarList.stream()
                 .sorted(Comparator.comparing(BloodSugar::getRecordDate).reversed()) // 날짜순으로 정렬
                 .limit(7) // 최근 7개 선택
@@ -42,13 +42,13 @@ public class BloodSugarService {
     }
 
     //월별 혈당 평균값 조회
-    public Map<String, Double> getMonthlyAverages(Long userId, int year) {
+    public Map<String, Double> getMonthlyAverages(String username, int year) {
         // 연도의 시작과 끝 날짜 계산
         LocalDateTime startOfYear = LocalDateTime.of(year, 1, 1, 0, 0);
         LocalDateTime endOfYear = LocalDateTime.of(year, 12, 31, 23, 59, 59);
 
         // 주어진 사용자와 연도에 해당하는 혈당 기록 조회
-        List<BloodSugar> bloodSugarList = repository.findByUserIdAndDateRange(userId, startOfYear, endOfYear);
+        List<BloodSugar> bloodSugarList = repository.findByUsernameAndDateRange(username, startOfYear, endOfYear);
 
         // 월별 평균 계산
         Map<String, Double> monthlyAverages = bloodSugarList.stream()
@@ -71,7 +71,7 @@ public class BloodSugarService {
     @Transactional
     public void createOrUpdateBloodSugar(User user, LocalDateTime date, Double bloodSugar) {
         LocalDate findDate = date.toLocalDate();
-        BloodSugar bloodSugarRecord = repository.findByUserIdAndDay(user.getId(), findDate)
+        BloodSugar bloodSugarRecord = repository.findByUsernameAndDay(user.getUsername(), findDate)
                 .orElse(new BloodSugar(user, date));
         bloodSugarRecord.setBloodSugar(bloodSugar);
         repository.save(bloodSugarRecord);

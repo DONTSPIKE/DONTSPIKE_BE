@@ -6,6 +6,7 @@ import org.boot.dontspike.DTO.FoodDto;
 
 //import org.boot.dontspike.DTO.FrequentFoodDto;
 import org.boot.dontspike.DTO.FrequentFoodDto;
+import org.boot.dontspike.JWT.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,11 @@ public class FoodController {
     private FoodService foodService;
     @Autowired
     private org.boot.dontspike.OpenAI.gptService gptService;
+    private final JWTUtil jwtUtil;
+
+    public FoodController(JWTUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @GetMapping("/api/food") //음식 검색-> 음식이름 받으면 그 음식에 대한 정보 출력
     public List<FoodDto> getFood(@RequestParam("search_food")String name) {
@@ -49,20 +55,29 @@ public class FoodController {
 
     @PostMapping("/api/diet/add-food") //음식 추가하기-> foodId랑 date 받고, 날짜별 음식 기록하기
     public void addFoodToBloodSugarRecord(
-            @RequestParam ("userId")Long userId,
+            @RequestHeader("Authorization") String token,
             @RequestParam ("foodId")Long foodId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate recordDate) {
-        foodService.addFoodToBloodSugarRecord(userId, foodId, recordDate);
+        // JWT 토큰에서 "Bearer " 부분 제거
+        String tokenValue = token.replace("Bearer ", "");
+
+        // JWT 토큰에서 user_id를 추출 (JWTUtil을 사용하여 처리)
+        String username = jwtUtil.getUsername(tokenValue);
+        foodService.addFoodToBloodSugarRecord(username, foodId, recordDate);
     }
 
 
-    @GetMapping("/api/food/favorites/{user_id}") // 최근 30일간 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
-    public ResponseEntity<Map<String, Object>> getFoodsEatenAtLeastFiveTimesInMonth(@PathVariable String user_id, LocalDateTime startDate, LocalDateTime endDate) {
+    @GetMapping("/api/food/favorites") // 최근 30일간 자주먹은음식 조회 -> 달 입력 받아서 리스트로 자주먹은음식이름이 responsedata
+    public ResponseEntity<Map<String, Object>> getFoodsEatenAtLeastFiveTimesInMonth(@RequestHeader("Authorization") String token, LocalDateTime startDate, LocalDateTime endDate) {
         startDate = LocalDateTime.now().minusDays(30);
         endDate = LocalDateTime.now();
-        Long userId = Long.parseLong(user_id);
-        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(userId,startDate, endDate);
-        FrequentAnalysisDto analysisDto =gptService.getFrequentAnalysis(userId,startDate,endDate);
+        // JWT 토큰에서 "Bearer " 부분 제거
+        String tokenValue = token.replace("Bearer ", "");
+
+        // JWT 토큰에서 user_id를 추출 (JWTUtil을 사용하여 처리)
+        String username = jwtUtil.getUsername(tokenValue);
+        List<FrequentFoodDto> frequentFoods = foodService.getFoodsEatenAtLeastFiveTimesInMonth(username, startDate, endDate);
+        FrequentAnalysisDto analysisDto =gptService.getFrequentAnalysis(username, startDate, endDate);
         Map<String, Object> response = new HashMap<>();
         response.put("frequentFoods", frequentFoods);
         response.put("analysisDto", analysisDto);

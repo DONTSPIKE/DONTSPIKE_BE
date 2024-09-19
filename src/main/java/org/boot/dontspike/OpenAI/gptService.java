@@ -1,8 +1,6 @@
 package org.boot.dontspike.OpenAI;
 
-import org.apache.catalina.users.SparseUserDatabase;
 import org.boot.dontspike.BloodSugar.BloodSugarAnalysisDto;
-import org.boot.dontspike.BloodSugar.BloodSugarRepository;
 import org.boot.dontspike.BloodSugar.BloodSugarService;
 import org.boot.dontspike.DTO.FoodDetailDto;
 import org.boot.dontspike.DTO.FrequentFoodDto;
@@ -12,28 +10,23 @@ import org.boot.dontspike.Food.FoodService;
 import org.boot.dontspike.Food.FrequentAnalysisDto;
 import org.boot.dontspike.FoodWiki.FoodWikiRepository;
 import org.boot.dontspike.FoodWiki.Foodwiki;
+import org.boot.dontspike.JWT.JWTUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.client.RestTemplate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 
 @Service
 public class gptService {
@@ -46,26 +39,25 @@ public class gptService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final FoodWikiRepository foodWikiRepository;
     private final FoodRepository foodRepository;
-    private final BloodSugarRepository bloodSugarRepository;
     private final BloodSugarService bloodSugarService;
     private final FoodService foodService;
+    private final JWTUtil jwtUtil;
 
 
-    public gptService(FoodWikiRepository foodWikiRepository, FoodRepository foodRepository, BloodSugarRepository bloodSugarRepository, BloodSugarService bloodSugarService, FoodService foodService, FoodService foodService1, FoodService foodService2) {
+    public gptService(FoodWikiRepository foodWikiRepository, FoodRepository foodRepository,  BloodSugarService bloodSugarService, FoodService foodService,JWTUtil jwtUtil) {
         this.foodWikiRepository = foodWikiRepository;
         this.foodRepository = foodRepository;
-        this.bloodSugarRepository = bloodSugarRepository;
         this.bloodSugarService = bloodSugarService;
-
+        this.jwtUtil = jwtUtil;
         this.foodService = foodService;
     }
 
 
 
     //자주 먹은 음식 리스트 가져와서 분석하는 코드
-    public FrequentAnalysisDto getFrequentAnalysis(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+    public FrequentAnalysisDto getFrequentAnalysis(String username, LocalDateTime startDate, LocalDateTime endDate) {
         // 최근 30일 동안 자주 섭취한 음식 가져오기
-        List<FrequentFoodDto> frequentFood = foodService.getFoodsEatenAtLeastFiveTimesInMonth(userId, startDate, endDate);
+        List<FrequentFoodDto> frequentFood = foodService.getFoodsEatenAtLeastFiveTimesInMonth(username, startDate, endDate);
 
         // 프롬프트 생성
         String prompt = createFrequentFoodAnalysisPrompt(frequentFood, startDate.getYear(), startDate.getMonth().toString());
@@ -103,9 +95,15 @@ public class gptService {
     }
 
     //월별 공복 혈당 분석해서 코맨트 가져오는 코드
-    public BloodSugarAnalysisDto getMonthlyBloodSugarAnalysis(Long userId, int year) {
+    public BloodSugarAnalysisDto getMonthlyBloodSugarAnalysis(@RequestHeader("Authorization") String token, int year) {
+
+        // JWT 토큰에서 "Bearer " 부분 제거
+        String tokenValue = token.replace("Bearer ", "");
+
+        // JWT 토큰에서 user_id를 추출 (JWTUtil을 사용하여 처리)
+        String username = jwtUtil.getUsername(tokenValue);
         // 데이터베이스에서 사용자의 월별 혈당 데이터를 가져옴
-        Map<String, Double> monthlyAverages = bloodSugarService.getMonthlyAverages(userId, year);
+        Map<String, Double> monthlyAverages = bloodSugarService.getMonthlyAverages(username, year);
 
         // 월별 혈당 평균 값을 GPT API로 분석 요청
         String apiUrl = "https://api.openai.com/v1/chat/completions";

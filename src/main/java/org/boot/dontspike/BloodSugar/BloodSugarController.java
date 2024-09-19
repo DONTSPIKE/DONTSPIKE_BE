@@ -1,5 +1,6 @@
 package org.boot.dontspike.BloodSugar;
 
+import org.boot.dontspike.JWT.JWTUtil;
 import org.boot.dontspike.User.User;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
@@ -18,39 +19,57 @@ public class BloodSugarController {
 
     private final BloodSugarService bloodSugarService;
     private final org.boot.dontspike.OpenAI.gptService gptService;
+    private final JWTUtil jwtUtil;
 
     //아침 공복 혈당 그래프 조회
-    @GetMapping("/api/blood-sugar/food/{user_id}")
-    public ResponseEntity<List<GraphDto>> getGraph(@PathVariable String user_id) {
+    @GetMapping("/api/blood-sugar/food")
+    public ResponseEntity<List<GraphDto>> getGraph(@RequestHeader("Authorization") String token) {
         try {
-            Long userIdLong = Long.parseLong(user_id);
-            return ResponseEntity.ok(bloodSugarService.getGraph(userIdLong));
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
+            // JWT 토큰에서 "Bearer " 부분 제거
+            String tokenValue = token.replace("Bearer ", "");
+
+            // JWT 토큰에서 user_id를 추출 (JWTUtil을 사용하여 처리)
+            String username = jwtUtil.getUsername(tokenValue);
+
+            // 추출된 user_id를 사용하여 그래프 데이터를 가져옴
+            return ResponseEntity.ok(bloodSugarService.getGraph(username));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build(); // 예외 발생 시 처리
         }
     }
 
     //월별 혈당 평균값 조회
     @GetMapping("/api/blood-sugar/average")
     public Map<String, Object> getMonthlyAverages(
-            @RequestParam("user_id") Long userId,
+            @RequestHeader("Authorization") String token,
             @RequestParam("year") int year) {
-        Map<String, Double> averages = bloodSugarService.getMonthlyAverages(userId, year);
+
+        // JWT 토큰에서 "Bearer " 부분 제거
+        String tokenValue = token.replace("Bearer ", "");
+
+        // JWT 토큰에서 user_id를 추출 (JWTUtil을 사용하여 처리)
+        String username = jwtUtil.getUsername(tokenValue);
+
+        Map<String, Double> averages = bloodSugarService.getMonthlyAverages(username, year);
         return Map.of(
-                "user_id", userId,
+                "username", username,
                 "year", year,
                 "monthly_averages", averages
         );
     }
 
     //혈당값 기록
-    @PostMapping("/api/{user_id}/blood-sugar")
-    public ResponseEntity<?> createBloodsugar(@PathVariable String user_id, @RequestParam("date") String date, @RequestParam("bloodsugar") Double bloodSugar) {
+    @PostMapping("/api/blood-sugar")
+    public ResponseEntity<?> createBloodsugar(@RequestHeader("Authorization") String token, @RequestParam("date") String date, @RequestParam("bloodsugar") Double bloodSugar) {
         try {
-            Long userIdLong = Long.parseLong(user_id);
+            // JWT 토큰에서 "Bearer " 부분 제거
+            String tokenValue = token.replace("Bearer ", "");
+
+            // JWT 토큰에서 user_id를 추출 (JWTUtil을 사용하여 처리)
+            String username = jwtUtil.getUsername(tokenValue);
             LocalDateTime recorddate = LocalDateTime.parse(date);
             User user = new User();
-            user.setId(userIdLong);
+            user.setUsername(username);
             bloodSugarService.createOrUpdateBloodSugar(user, recorddate, bloodSugar);
             return ResponseEntity.ok("등록되었습니다.");
         } catch (NumberFormatException e) {
