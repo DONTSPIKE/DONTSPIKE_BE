@@ -38,6 +38,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         // JWT 생성
         String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
+        System.out.println("Generated JWT: " + token);
 
         // 쿠키 설정
         ResponseCookie responseCookie = ResponseCookie.from("Authorization", token)
