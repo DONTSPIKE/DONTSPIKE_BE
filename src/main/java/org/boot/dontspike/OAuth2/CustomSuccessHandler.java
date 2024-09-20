@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.boot.dontspike.DTO.CustomOAuth2User;
 import org.boot.dontspike.JWT.JWTUtil;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -29,22 +30,31 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
-        //OAuth2User
+        // OAuth2User 정보 추출
         CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
-
         String username = customUserDetails.getUsername();
-
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-        GrantedAuthority auth = iterator.next();
-        String role = auth.getAuthority();
+        String role = authorities.iterator().next().getAuthority();
 
+        // JWT 생성
         String token = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
 
-        response.addCookie(createCookie("Authorization", token));
+        // 쿠키 설정
+        ResponseCookie responseCookie = ResponseCookie.from("Authorization", token)
+                .httpOnly(true)
+                .secure(true)  // HTTPS 연결을 통해서만 전송
+                .sameSite("None")  // 크로스 사이트 요청을 허용
+                .path("/")  // 모든 경로에서 접근 가능
+                .maxAge(60 * 60 * 60)  // 쿠키의 만료 시간 설정
+                .build();
+
+        // 쿠키를 응답에 추가
+        response.addHeader("Set-Cookie", responseCookie.toString());
+
+        // 리다이렉트 처리
         response.sendRedirect("https://dontspike.vercel.app/main");
     }
+
 
     private Cookie createCookie(String key, String value) {
 
