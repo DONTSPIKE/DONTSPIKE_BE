@@ -39,17 +39,6 @@ public class TokenController {
             return ResponseEntity.badRequest().body("Access token not found in cookies");
         }
 
-        // 새로운 ResponseCookie 생성 및 설정
-        ResponseCookie responseCookie = ResponseCookie.from("access", accessToken)
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(24 * 60 * 60)
-                .sameSite("None")
-                .build();
-
-        // 응답에 쿠키 추가
-        response.addHeader("Set-Cookie", responseCookie.toString());
 
         // AccessToken을 응답으로 반환
         return ResponseEntity.ok(accessToken);
