@@ -49,14 +49,13 @@ public class SecurityConfig {
 
                             CorsConfiguration configuration = new CorsConfiguration();
 
-                            configuration.setAllowedOrigins(Arrays.asList("https://dontspike.vercel.app", "http://localhost:5173"));//프론트 서버가 떠있는 프론트 주소
+                            configuration.setAllowedOriginPatterns(Arrays.asList("https://dontspike.vercel.app", "http://localhost:5173"));//프론트 서버가 떠있는 프론트 주소
                             configuration.setAllowedMethods(Collections.singletonList("*"));
                             configuration.setAllowCredentials(true);
                             configuration.setAllowedHeaders(Collections.singletonList("*"));
                             configuration.setMaxAge(3600L);
 
-                            configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-                            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+                            configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "Authorization"));
 
                             return configuration;
                         }
