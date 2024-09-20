@@ -22,7 +22,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
         System.out.println(oAuth2User); //이 값이 뭔지 확인하기 위해 시스템로그를 찍어보는 행동
-
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         OAuth2Response oAuth2Response = null;
         if (registrationId.equals("naver")) {
