@@ -27,7 +27,7 @@ public class TokenController {
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("accessToken".equals(cookie.getName())) {
+                if ("Authorization".equals(cookie.getName())) {
                     accessToken = cookie.getValue();
                     break;
                 }

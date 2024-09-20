@@ -49,7 +49,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 .build();
 
         // 쿠키를 응답에 추가
-        response.addHeader("Set-Cookie", responseCookie.toString());
+        response.addCookie(createCookie("Authorization", token));
 
         // 리다이렉트 처리
         response.sendRedirect("https://dontspike.vercel.app/main");
