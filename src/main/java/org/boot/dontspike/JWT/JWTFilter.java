@@ -27,6 +27,18 @@ public class JWTFilter extends OncePerRequestFilter {
         // Cookie들을 불러온 뒤 Authorization Key에 담긴 쿠키를 찾음
         String authorization = null;
         Cookie[] cookies = request.getCookies(); // Cookie 리스트
+        String requestUri = request.getRequestURI();
+
+        if (requestUri.matches("^\\/login(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (requestUri.matches("^\\/oauth2(?:\\/.*)?$")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // 쿠키가 null인지 확인
         if (cookies != null) {
