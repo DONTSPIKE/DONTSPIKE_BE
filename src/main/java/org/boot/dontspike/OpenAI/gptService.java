@@ -145,7 +145,7 @@ public class gptService {
 
         // 프롬프트 기본 정보 추가
         prompt.append(String.format("다음은 %d년 %s 동안 사용자가 자주 섭취한 음식 목록입니다. ", year, month));
-        prompt.append("이 목록을 바탕으로 사용자의 식습관에 대해 분석하고 개선할 수 있는 팁을 제공해 주세요.(500자 이내로)\n\n");
+        prompt.append("이 목록을 바탕으로 사용자의 식습관에 대해 분석하고 혈당관리를 개선할 수 있는 팁을 제공해 주세요.(500자 이내로)\n\n");
 
         // 음식 목록 추가
         prompt.append("자주 섭취한 음식 목록:\n");
