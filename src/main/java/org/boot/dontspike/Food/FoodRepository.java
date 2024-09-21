@@ -22,8 +22,8 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
             "GROUP BY f.foodDataId.fooddata_id, f.foodDataId.foodname " +
             "HAVING COUNT(f) >= 5")
     List<FrequentFoodDto> findFoodsEatenAtLeastFiveTimes(
-            @Param("username") String username,
-            @Param("startDate") LocalDateTime startDate,
-            @Param("endDate") LocalDateTime endDate);
+            String username,
+            LocalDateTime startDate,
+            LocalDateTime endDate);
 
 }
