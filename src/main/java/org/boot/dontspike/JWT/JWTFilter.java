@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.boot.dontspike.DTO.CustomOAuth2User;
 import org.boot.dontspike.DTO.UserDTO;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,39 +41,37 @@ public class JWTFilter extends OncePerRequestFilter {
             return;
         }
 
-        // 쿠키가 null인지 확인
+        // 쿠키가 null인지 확인하고 로그 기록
         if (cookies != null) {
+            System.out.println("Cookies received for URI: " + requestUri);
             for (Cookie cookie : cookies) {
-                System.out.println(cookie.getName()); // 시스템 로그
+                System.out.println("Cookie Name: " + cookie.getName()); // 쿠키 이름 로그 출력
                 if (cookie.getName().equals("Authorization")) {
                     authorization = cookie.getValue();
+                    System.out.println("Authorization token found: " + authorization); // 토큰 값 출력
                 }
             }
-        }
-        else {
-            System.out.println("No cookies received.");
+        } else {
+            System.out.println("No cookies received for URI: " + requestUri);
         }
 
         // Authorization 헤더 검증
         if (authorization == null) {
-            System.out.println("token null");
+            System.out.println("Token null for URI: " + requestUri);
             filterChain.doFilter(request, response);
             return; // 조건이 해당되면 메소드 종료(필수)
         }
 
-        // 토큰
-        String token = authorization;
-
-        // 토큰 소멸 시간 검증
-        if (jwtUtil.isExpired(token)) {
-            System.out.println("token expired");
+        // 토큰 만료 시간 검증
+        if (jwtUtil.isExpired(authorization)) {
+            System.out.println("Token expired for URI: " + requestUri);
             filterChain.doFilter(request, response);
             return; // 조건이 해당되면 메소드 종료(필수)
         }
 
         // 토큰에서 username, role 획득
-        String username = jwtUtil.getUsername(token);
-        String role = jwtUtil.getRole(token);
+        String username = jwtUtil.getUsername(authorization);
+        String role = jwtUtil.getRole(authorization);
         System.out.println("Extracted from token - username: " + username + ", role: " + role);
 
         // userDTO를 생성하여 값 설정
