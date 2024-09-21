@@ -65,7 +65,7 @@ public class BloodSugarController {
             // JWT 토큰에서 "Bearer " 부분 제거
             String tokenValue = token.replace("Bearer ", "");
 
-            // JWT 토큰에서 user_id를 추출 (JWTUtil을 사용하여 처리)
+            // JWT 토큰에서 username를 추출 (JWTUtil을 사용하여 처리)
             String username = jwtUtil.getUsername(tokenValue);
             LocalDateTime recorddate = LocalDateTime.parse(date);
             User user = new User();

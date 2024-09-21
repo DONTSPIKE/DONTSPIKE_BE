@@ -25,7 +25,7 @@ public class BloodSugar {
 
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn (name = "user_id")
+    @JoinColumn (name = "userId")
     private User user;
 
     @Column(nullable = false)
