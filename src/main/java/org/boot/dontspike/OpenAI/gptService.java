@@ -139,21 +139,21 @@ public class gptService {
         return new BloodSugarAnalysisDto();
     }
 
-// 자주 섭취한 음식 데이터를 기반으로 프롬프트 생성
+    // 자주 섭취한 음식 데이터를 기반으로 프롬프트 생성
     private String createFrequentFoodAnalysisPrompt(List<FrequentFoodDto> frequentFood, int year, String month) {
         StringBuilder prompt = new StringBuilder();
 
-    // 프롬프트 기본 정보 추가
+        // 프롬프트 기본 정보 추가
         prompt.append(String.format("다음은 %d년 %s 동안 사용자가 자주 섭취한 음식 목록입니다. ", year, month));
-        prompt.append("이 목록을 바탕으로 사용자의 식습관에 대해 분석하고 개선할 수 있는 팁을 제공해 주세요.\n\n");
+        prompt.append("이 목록을 바탕으로 사용자의 식습관에 대해 분석하고 개선할 수 있는 팁을 제공해 주세요.(500자 이내로)\n\n");
 
-    // 음식 목록 추가
+        // 음식 목록 추가
         prompt.append("자주 섭취한 음식 목록:\n");
         for (FrequentFoodDto food : frequentFood) {
-        prompt.append(String.format("- %s: %d회 섭취\n", food.getFoodName(), food.getCount()));
-    }
+            prompt.append(String.format("- %s: %d회 섭취\n", food.getFoodName(), food.getCount()));
+        }
 
-    // 분석 요청 추가
+        // 분석 요청 추가
         prompt.append("자주 섭취한 음식 목록을 분석해서 주로 어떤걸 먹었는지 알려주세요.");
         prompt.append("자주 섭취한 음식을 보고, 식습관에 대한 개선 팁을 제시해주세요");
 
@@ -162,11 +162,11 @@ public class gptService {
 //        prompt.append("3. 건강한 식습관을 위한 개선 팁 제시\n");
 
         return prompt.toString();
-}
+    }
     // GPT에게 보낼 프롬프트 생성 (월별 혈당 데이터를 기반으로 분석 요청)
     private String createBloodSugarAnalysisPrompt(Map<String, Double> monthlyAverages, int year) {
         StringBuilder prompt = new StringBuilder();
-        prompt.append(String.format("다음은 %d년 사용자의 월별 공복 혈당 수치입니다. 월별 공복 혈당 수치를 비교하여 변화와 분석을 제공해 주세요.\n", year));
+        prompt.append(String.format("다음은 %d년 사용자의 월별 공복 혈당 수치입니다. 월별 공복 혈당 수치를 비교하여 변화와 분석을 제공해 주세요.(500자 이내로)\n", year));
         prompt.append("월별 공복 혈당 수치:\n");
 
         for (Map.Entry<String, Double> entry : monthlyAverages.entrySet()) {
@@ -221,7 +221,7 @@ public class gptService {
     public FoodDetailDto getFoodDetails(String foodName) {
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = String.format(
-                "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요. 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요 포함할 내용: " +
+                "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요.(500자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요 포함할 내용: " +
                         "양(int, g 기준으로, g만 출력해주세요), 열량(double), 탄수화물(double), 단백질(double), 지방(double), " +
                         "나트륨(double), 콜레스테롤(double), 전문가의 소견(string), " +
                         "적정 섭취량(string), 섭취 방법(string), 혈당 지수(string).",
