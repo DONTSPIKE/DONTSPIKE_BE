@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.client.RestTemplate;
-
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class gptService {
@@ -217,8 +218,17 @@ public class gptService {
         return responseBody;
     }
 
+
     //foodwiki 내용 받아오는 코드
     public FoodDetailDto getFoodDetails(String foodName) {
+        Optional<Food> food = foodRepository.findByFoodname(foodName);
+        if (food.isPresent()) {
+            // 이미 음식 정보가 DB에 있을 경우, 해당 정보를 DTO로 변환하여 반환
+            Foodwiki foodwiki = foodWikiRepository.findByFood(food.orElse(null));
+            if (foodwiki != null) {
+                return mapToDto(food.orElse(null), foodwiki);
+            }
+        }
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = String.format(
                 "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요.(500자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요 포함할 내용: " +
@@ -227,6 +237,7 @@ public class gptService {
                         "적정 섭취량(string), 섭취 방법(string), 혈당 지수(string).",
                 foodName
         );
+
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
@@ -391,5 +402,21 @@ public class gptService {
         } catch (NumberFormatException e) {
             return 0.0;
         }
+    }
+    private FoodDetailDto mapToDto(Food food, Foodwiki foodwiki) {
+        FoodDetailDto dto = new FoodDetailDto();
+        dto.setFoodname(food.getFoodname());
+        dto.setAmount(food.getAmount());
+        dto.setCalorie(food.getCalorie());
+        dto.setProtein(food.getProtein());
+        dto.setFat(food.getFat());
+        dto.setSodium(food.getSodium());
+        dto.setCholesterol(food.getCholesterol());
+        dto.setCarbohydrate(food.getCarbohydrate());
+        dto.setExpertOpinion(foodwiki.getExpertOpinion());
+        dto.setProperIntake(foodwiki.getProperIntake());
+        dto.setIngestionMethod(foodwiki.getIngestionMethod());
+        dto.setGI(foodwiki.getGi());
+        return dto;
     }
 }
