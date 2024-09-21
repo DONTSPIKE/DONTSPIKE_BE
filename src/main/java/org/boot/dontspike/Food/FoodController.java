@@ -74,9 +74,7 @@ public class FoodController {
 
     @GetMapping("/api/food/favorites") // 최근 30일간 자주먹은음식 조회
     public ResponseEntity<Map<String, Object>> getFoodsEatenAtLeastFiveTimesInMonth(
-            @RequestHeader("Authorization") String token,
-            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+            @RequestHeader("Authorization") String token, LocalDateTime startDate, LocalDateTime endDate) {
 
         try {
             startDate = LocalDateTime.now().minusDays(30);
