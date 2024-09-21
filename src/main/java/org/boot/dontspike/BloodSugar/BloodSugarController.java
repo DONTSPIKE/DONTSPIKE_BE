@@ -63,7 +63,7 @@ public class BloodSugarController {
     }
 
     // 혈당값 기록
-    @PostMapping("/api/blood-sugar")
+    @PostMapping("/api/blood-sugar/record")
     public ResponseEntity<?> createBloodsugar(@RequestHeader("Authorization") String token, @RequestParam("date") String date, @RequestParam("bloodsugar") Double bloodSugar) {
         try {
             String tokenValue = token.replace("Bearer ", "");
