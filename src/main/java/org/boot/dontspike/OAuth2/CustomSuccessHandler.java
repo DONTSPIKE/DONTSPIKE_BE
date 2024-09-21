@@ -46,7 +46,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 .secure(true)  // HTTPS 연결을 통해서만 전송
                 .sameSite("None")  // 크로스 사이트 요청을 허용
                 .path("/")  // 모든 경로에서 접근 가능
-                .maxAge(60 * 60 * 60)  // 쿠키의 만료 시간 설정
+                .maxAge(60000 * 60 * 60)  // 쿠키의 만료 시간 설정
                 .build();
 
         // 쿠키를 응답에 추가
