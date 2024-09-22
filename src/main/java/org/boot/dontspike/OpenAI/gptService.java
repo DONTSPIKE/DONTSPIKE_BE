@@ -217,7 +217,22 @@ public class gptService {
         logger.info("API Response: {}", responseBody);
         return responseBody;
     }
-
+    private FoodDetailDto mapToDto(Food food, Foodwiki foodwiki) {
+        FoodDetailDto dto = new FoodDetailDto();
+        dto.setFoodname(food.getFoodname());
+        dto.setAmount(food.getAmount());
+        dto.setCalorie(food.getCalorie());
+        dto.setProtein(food.getProtein());
+        dto.setFat(food.getFat());
+        dto.setSodium(food.getSodium());
+        dto.setCholesterol(food.getCholesterol());
+        dto.setCarbohydrate(food.getCarbohydrate());
+        dto.setExpertOpinion(foodwiki.getExpertOpinion());
+        dto.setProperIntake(foodwiki.getProperIntake());
+        dto.setIngestionMethod(foodwiki.getIngestionMethod());
+        dto.setGI(foodwiki.getGi());
+        return dto;
+    }
 
     //foodwiki 내용 받아오는 코드
     public FoodDetailDto getFoodDetails(String foodName) {
@@ -403,20 +418,5 @@ public class gptService {
             return 0.0;
         }
     }
-    private FoodDetailDto mapToDto(Food food, Foodwiki foodwiki) {
-        FoodDetailDto dto = new FoodDetailDto();
-        dto.setFoodname(food.getFoodname());
-        dto.setAmount(food.getAmount());
-        dto.setCalorie(food.getCalorie());
-        dto.setProtein(food.getProtein());
-        dto.setFat(food.getFat());
-        dto.setSodium(food.getSodium());
-        dto.setCholesterol(food.getCholesterol());
-        dto.setCarbohydrate(food.getCarbohydrate());
-        dto.setExpertOpinion(foodwiki.getExpertOpinion());
-        dto.setProperIntake(foodwiki.getProperIntake());
-        dto.setIngestionMethod(foodwiki.getIngestionMethod());
-        dto.setGI(foodwiki.getGi());
-        return dto;
-    }
+
 }
