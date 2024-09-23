@@ -431,6 +431,7 @@ public class gptService {
         try {
             return Integer.parseInt(value.replaceAll("[^0-9]", ""));
         } catch (NumberFormatException e) {
+            logger.error("Failed to parse integer from value: {}", value, e);
             return 0;
         }
     }
@@ -439,7 +440,8 @@ public class gptService {
         try {
             return Double.parseDouble(value.replaceAll("[^0-9.]", ""));
         } catch (NumberFormatException e) {
-            return 0.0;
+            logger.error("Failed to parse double from value: {}", value, e);
+            return 0.0;  // 예외 발생 시 0.0 반환
         }
     }
 
