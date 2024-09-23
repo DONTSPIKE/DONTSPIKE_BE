@@ -328,6 +328,8 @@ public class gptService {
 
 
     private void saveFoodDetailsToDB(FoodDetailDto dto) {
+        logger.info("Saving food details: name={}, amount={}, calorie={}, protein={}",
+                dto.getFoodname(), dto.getAmount(), dto.getCalorie(), dto.getProtein());
         // Food 엔티티 생성 및 저장
         Food food = new Food();
         food.setFoodname(dto.getFoodname());
