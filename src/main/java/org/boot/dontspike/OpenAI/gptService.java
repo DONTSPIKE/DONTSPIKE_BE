@@ -236,14 +236,20 @@ public class gptService {
 
     //foodwiki 내용 받아오는 코드
     public FoodDetailDto getFoodDetails(String foodName) {
+        long startTime = System.currentTimeMillis();  // 시작 시간 기록
         Optional<Food> food = foodRepository.findByFoodname(foodName);
         if (food.isPresent()) {
             // 이미 음식 정보가 DB에 있을 경우, 해당 정보를 DTO로 변환하여 반환
             Foodwiki foodwiki = foodWikiRepository.findByFood(food.orElse(null));
             if (foodwiki != null) {
+                long endTime = System.currentTimeMillis();  // 로컬 DB에서 반환하는 시간 기록
+                logger.info("Local DB 조회 및 반환 시간: {} ms", (endTime - startTime));
                 return mapToDto(food.orElse(null), foodwiki);
             }
         }
+        // GPT API 호출 시작 시간 기록
+        long gptStartTime = System.currentTimeMillis();
+
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = String.format(
                 "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요.(500자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요 포함할 내용: " +
@@ -271,7 +277,10 @@ public class gptService {
         ResponseEntity<Map> response = restTemplate.postForEntity(apiUrl, request, Map.class);
         Map<String, Object> responseBody = response.getBody();
 
+        long gptEndTime = System.currentTimeMillis();  // GPT API 응답 시간 기록
+        logger.info("GPT API 호출 및 응답 시간: {} ms", (gptEndTime - gptStartTime));
         logger.info("API Response: {}", responseBody);
+
 
         if (responseBody != null) {
             Object choicesObj = responseBody.get("choices");
@@ -288,7 +297,20 @@ public class gptService {
                             FoodDetailDto dto = parseFoodDetails(result);
                             dto.setFoodname(foodName);// 검색한 음식 이름 설정
 
+                            // GPT 응답 파싱 시간 기록
+                            long parseEndTime = System.currentTimeMillis();
+                            logger.info("GPT 응답 파싱 시간: {} ms", (parseEndTime - gptEndTime));
+
+                            // DB 저장 시작 시간 기록
+                            long dbSaveStartTime = System.currentTimeMillis();
                             saveFoodDetailsToDB(dto);
+                            long dbSaveEndTime = System.currentTimeMillis();  // DB 저장 완료 시간 기록
+
+                            logger.info("DB 저장 시간: {} ms", (dbSaveEndTime - dbSaveStartTime));
+
+                            // 전체 프로세스 시간 기록
+                            long totalEndTime = System.currentTimeMillis();
+                            logger.info("전체 요청부터 DB 저장까지 소요된 시간: {} ms", (totalEndTime - startTime));
 
                             return dto;
                         } else {
