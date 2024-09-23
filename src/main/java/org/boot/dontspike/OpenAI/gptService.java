@@ -252,7 +252,7 @@ public class gptService {
 
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = String.format(
-                "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요.(500자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요 포함할 내용: " +
+                "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요.(500자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요, \"음식 : 200, 단백질 : 10\"의 형식으로. 포함할 내용: " +
                         "양(int, g 기준으로, g만 출력해주세요), 열량(double), 탄수화물(double), 단백질(double), 지방(double), " +
                         "나트륨(double), 콜레스테롤(double), 전문가의 소견(string), " +
                         "적정 섭취량(string), 섭취 방법(string), 혈당 지수(string).",
