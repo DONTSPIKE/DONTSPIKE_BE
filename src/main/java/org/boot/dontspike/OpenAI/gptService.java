@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class gptService {
@@ -252,7 +254,7 @@ public class gptService {
 
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = String.format(
-                "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요.(500자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요 포함할 내용: " +
+                "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요.(500자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요, \"양 : 200, 단백질 : 10\"의 형식으로. 포함할 내용: " +
                         "양(int, g 기준으로, g만 출력해주세요), 열량(double), 탄수화물(double), 단백질(double), 지방(double), " +
                         "나트륨(double), 콜레스테롤(double), 전문가의 소견(string), " +
                         "적정 섭취량(string), 섭취 방법(string), 혈당 지수(string).",
@@ -358,74 +360,72 @@ public class gptService {
 
 
 
-    //FoodDetail 변환
+    // FoodDetail 변환
     private FoodDetailDto parseFoodDetails(String response) {
-        String[] lines = response.split("\n");
         FoodDetailDto dto = new FoodDetailDto();
 
+        // 정규 표현식을 통해 데이터 추출 (양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤 등)
+        Pattern amountPattern = Pattern.compile("양[\\s]*:[\\s]*([0-9]+)");
+        Pattern caloriePattern = Pattern.compile("열량[\\s]*:[\\s]*([0-9]+)");
+        Pattern carbPattern = Pattern.compile("탄수화물[\\s]*:[\\s]*([0-9]+)");
+        Pattern proteinPattern = Pattern.compile("단백질[\\s]*:[\\s]*([0-9]+)");
+        Pattern fatPattern = Pattern.compile("지방[\\s]*:[\\s]*([0-9]+)");
+        Pattern sodiumPattern = Pattern.compile("나트륨[\\s]*:[\\s]*([0-9]+)");
+        Pattern cholesterolPattern = Pattern.compile("콜레스테롤[\\s]*:[\\s]*([0-9]+)");
+
+        // 정규 표현식 적용하여 데이터를 추출하고 dto에 저장
+        Matcher amountMatcher = amountPattern.matcher(response);
+        if (amountMatcher.find()) {
+            dto.setAmount(parseInt(amountMatcher.group(1)));
+        }
+
+        Matcher calorieMatcher = caloriePattern.matcher(response);
+        if (calorieMatcher.find()) {
+            dto.setCalorie(parseDouble(calorieMatcher.group(1)));
+        }
+
+        Matcher carbMatcher = carbPattern.matcher(response);
+        if (carbMatcher.find()) {
+            dto.setCarbohydrate(parseDouble(carbMatcher.group(1)));
+        }
+
+        Matcher proteinMatcher = proteinPattern.matcher(response);
+        if (proteinMatcher.find()) {
+            dto.setProtein(parseDouble(proteinMatcher.group(1)));
+        }
+
+        Matcher fatMatcher = fatPattern.matcher(response);
+        if (fatMatcher.find()) {
+            dto.setFat(parseDouble(fatMatcher.group(1)));
+        }
+
+        Matcher sodiumMatcher = sodiumPattern.matcher(response);
+        if (sodiumMatcher.find()) {
+            dto.setSodium(parseDouble(sodiumMatcher.group(1)));
+        }
+
+        Matcher cholesterolMatcher = cholesterolPattern.matcher(response);
+        if (cholesterolMatcher.find()) {
+            dto.setCholesterol(parseDouble(cholesterolMatcher.group(1)));
+        }
+
+        // GPT 응답에서 기타 텍스트 내용 파싱 (전문가 소견, 적정 섭취량 등)
+        String[] lines = response.split("\n");
         for (String line : lines) {
-            if (line.contains(":")) {
-                String[] parts = line.split(":", 2);
-                if (parts.length == 2) {
-                    String key = parts[0].trim();
-                    String value = parts[1].trim().replace("\"", ""); // 큰따옴표 제거
-
-                    switch (key) {
-                        case "양":
-                        case "amount":
-                            dto.setAmount(parseInt(value));
-                            break;
-                        case "열량":
-                        case "calorie":
-                            dto.setCalorie(parseDouble(value));
-                            break;
-                        case "탄수화물":
-                        case "carbohydrate":
-                            dto.setCarbohydrate(parseDouble(value));
-                            break;
-                        case "단백질":
-                        case "protein":
-                            dto.setProtein(parseDouble(value));
-                            break;
-                        case "지방":
-                        case "fat":
-                            dto.setFat(parseDouble(value));
-                            break;
-                        case "나트륨":
-                        case "sodium":
-                            dto.setSodium(parseDouble(value));
-                            break;
-                        case "콜레스테롤":
-                        case "cholesterol":
-                            dto.setCholesterol(parseDouble(value));
-                            break;
-                        case "전문가의 소견":
-                        case "expert opinion":
-                            dto.setExpertOpinion(value);
-                            break;
-                        case "적정 섭취량":
-                        case "proper intake":
-                            dto.setProperIntake(value);
-                            break;
-                        case "섭취 방법":
-                        case "ingestion method":
-                            dto.setIngestionMethod(value);
-                            break;
-                        case "혈당 지수":
-                        case "gi":
-                            dto.setGI(value);
-                            break;
-                        default:
-                            // 해당하는 키가 없으면 무시
-
-                            break;
-                    }
-                }
+            if (line.contains("전문가의 소견")) {
+                dto.setExpertOpinion(line.split(":")[1].trim());
+            } else if (line.contains("적정 섭취량")) {
+                dto.setProperIntake(line.split(":")[1].trim());
+            } else if (line.contains("섭취 방법")) {
+                dto.setIngestionMethod(line.split(":")[1].trim());
+            } else if (line.contains("혈당 지수")) {
+                dto.setGI(line.split(":")[1].trim());
             }
         }
 
         return dto;
     }
+
 
     private int parseInt(String value) {
         try {
