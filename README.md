@@ -31,3 +31,4 @@
 
 
 ## 🛠️ 기술 스택
+![기술스택](https://github.com/user-attachments/assets/459ab605-ddd8-460c-b5b6-bd8776eaba6c)
