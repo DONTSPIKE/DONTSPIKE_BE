@@ -23,13 +23,15 @@
 
 <img width="1470" alt="스크린샷 2024-08-09 오후 3 52 54" src="https://github.com/user-attachments/assets/de70050b-56f8-4f96-b7c7-072b58aaf8f2">
 
-5. **혈당백과 페이지**- 음식 검색과 혈당 백과 캐러셀
-<img width="1470" alt="스크린샷 2024-08-09 오후 3 50 45" src="https://github.com/user-attachments/assets/5d9b5411-6170-4cf7-84b3-1378b3d9274f">
->
+5. **식단 추가 페이지**- 식단 추가 (자주먹은 음식 활용)
+<img width="1470" alt="스크린샷 2024-08-09 오후 3 52 54" src="https://github.com/user-attachments/assets/246d869e-01b2-46d1-aa37-16399195c177">
 
-6. **혈당백과 상세 페이지**- 영양 정보와 혈당 관련 팁 제공
+6. **혈당백과 페이지**- 음식 검색과 혈당 백과 캐러셀
+<img width="1470" alt="스크린샷 2024-08-09 오후 3 50 45" src="https://github.com/user-attachments/assets/5d9b5411-6170-4cf7-84b3-1378b3d9274f">
+
+7. **혈당백과 상세 페이지**- 영양 정보와 혈당 관련 팁 제공
 <img width="1468" alt="스크린샷 2024-08-09 오후 3 51 45" src="https://github.com/user-attachments/assets/6b74c9e8-b2c3-468d-bfd1-747382f16e8e">
->
+
 
 ## Coworkers
 ![#8-팀소개](https://github.com/user-attachments/assets/180834aa-fa9f-4074-836d-634ece82ffa6)
