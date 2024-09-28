@@ -432,9 +432,9 @@ public class gptService {
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("지피티 파싱에러: " + e.getMessage());
+                return retryGptRequest(response);
             }
         }
-
 
         return dto;
     }
@@ -456,6 +456,30 @@ public class gptService {
             logger.error("Failed to parse double from value: {}", value, e);
             return 0.0;  // 예외 발생 시 0.0 반환
         }
+    }
+    private FoodDetailDto retryGptRequest(String originalPrompt) {
+        logger.info("GPT API에 재요청 중...");
+        String apiUrl = "https://api.openai.com/v1/chat/completions";
+        Map<String, Object> responseBody = gpt(apiUrl, originalPrompt);
+
+        if (responseBody != null) {
+            Object choicesObj = responseBody.get("choices");
+            if (choicesObj instanceof List) {
+                List<?> choicesList = (List<?>) choicesObj;
+                if (!choicesList.isEmpty() && choicesList.get(0) instanceof Map) {
+                    Map<?, ?> firstChoice = (Map<?, ?>) choicesList.get(0);
+                    Object messageObj = firstChoice.get("message");
+                    if (messageObj instanceof Map) {
+                        Map<?, ?> messageMap = (Map<?, ?>) messageObj;
+                        Object contentObj = messageMap.get("content");
+                        if (contentObj != null) {
+                            return parseFoodDetails(contentObj.toString());
+                        }
+                    }
+                }
+            }
+        }
+        return new FoodDetailDto();
     }
 
 }
