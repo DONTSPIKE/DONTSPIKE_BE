@@ -254,7 +254,10 @@ public class gptService {
 
         String apiUrl = "https://api.openai.com/v1/chat/completions";
         String prompt = String.format(
-                "음식 항목 %s에 대한 상세 정보를 자세히 제공해 주세요.(500자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요, \"양 : 200, 단백질 : 10\"의 형식으로. 포함할 내용: " +
+                "음식 항목 %s에 대한 혈당관리를 기준으로 상세 정보를 자세히 제공해 주세요. 적정섭취량은 하루 권장 섭취량과 해당 섭취량만큼 섭취했을 경우" +
+                        "얼마나 혈당이 올라갈지도 알려주고, 섭취 방법은 함께 먹으면 혈당 스파이크를 방지할 수 있을 수 있는 방법을 알려주고" +
+                        "혈당 지수는 정확한 수치를 포함해서 알려줘. " +
+                        "(1000자 이내로) 양, 열량, 탄수화물, 단백질, 지방, 나트륨, 콜레스테롤은 단위(g,mg 등)없이 숫자로만 출력해주세요, \"양 : 200, 단백질 : 10\"의 형식으로. 포함할 내용: " +
                         "양(int, g 기준으로, g만 출력해주세요), 열량(double), 탄수화물(double), 단백질(double), 지방(double), " +
                         "나트륨(double), 콜레스테롤(double), 전문가의 소견(string), " +
                         "적정 섭취량(string), 섭취 방법(string), 혈당 지수(string).",
@@ -412,14 +415,24 @@ public class gptService {
         // GPT 응답에서 기타 텍스트 내용 파싱 (전문가 소견, 적정 섭취량 등)
         String[] lines = response.split("\n");
         for (String line : lines) {
-            if (line.contains("전문가의 소견")) {
-                dto.setExpertOpinion(line.split(":")[1].trim());
-            } else if (line.contains("적정 섭취량")) {
-                dto.setProperIntake(line.split(":")[1].trim());
-            } else if (line.contains("섭취 방법")) {
-                dto.setIngestionMethod(line.split(":")[1].trim());
-            } else if (line.contains("혈당 지수")) {
-                dto.setGI(line.split(":")[1].trim());
+            try {
+                if (line.contains(":")) {
+                    String[] parts = line.split(":");
+                    if (parts.length > 1) {
+                        if (line.contains("전문가의 소견")) {
+                            dto.setExpertOpinion(parts[1].trim());
+                        } else if (line.contains("적정 섭취량")) {
+                            dto.setProperIntake(parts[1].trim());
+                        } else if (line.contains("섭취 방법")) {
+                            dto.setIngestionMethod(parts[1].trim());
+                        } else if (line.contains("혈당 지수")) {
+                            dto.setGI(parts[1].trim());
+                        }
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("지피티 파싱에러: " + e.getMessage());
+                return retryGptRequest(response);
             }
         }
 
@@ -443,6 +456,30 @@ public class gptService {
             logger.error("Failed to parse double from value: {}", value, e);
             return 0.0;  // 예외 발생 시 0.0 반환
         }
+    }
+    private FoodDetailDto retryGptRequest(String originalPrompt) {
+        logger.info("GPT API에 재요청 중...");
+        String apiUrl = "https://api.openai.com/v1/chat/completions";
+        Map<String, Object> responseBody = gpt(apiUrl, originalPrompt);
+
+        if (responseBody != null) {
+            Object choicesObj = responseBody.get("choices");
+            if (choicesObj instanceof List) {
+                List<?> choicesList = (List<?>) choicesObj;
+                if (!choicesList.isEmpty() && choicesList.get(0) instanceof Map) {
+                    Map<?, ?> firstChoice = (Map<?, ?>) choicesList.get(0);
+                    Object messageObj = firstChoice.get("message");
+                    if (messageObj instanceof Map) {
+                        Map<?, ?> messageMap = (Map<?, ?>) messageObj;
+                        Object contentObj = messageMap.get("content");
+                        if (contentObj != null) {
+                            return parseFoodDetails(contentObj.toString());
+                        }
+                    }
+                }
+            }
+        }
+        return new FoodDetailDto();
     }
 
 }
