@@ -473,7 +473,13 @@ public class gptService {
                         Map<?, ?> messageMap = (Map<?, ?>) messageObj;
                         Object contentObj = messageMap.get("content");
                         if (contentObj != null) {
-                            return parseFoodDetails(contentObj.toString());
+                            // Parse the GPT response and get a new FoodDetailDto
+                            FoodDetailDto dto = parseFoodDetails(contentObj.toString());
+
+                            // Save the new data into the database
+                            saveFoodDetailsToDB(dto);
+
+                            return dto;
                         }
                     }
                 }
@@ -481,5 +487,6 @@ public class gptService {
         }
         return new FoodDetailDto();
     }
+
 
 }
