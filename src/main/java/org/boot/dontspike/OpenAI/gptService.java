@@ -415,16 +415,26 @@ public class gptService {
         // GPT 응답에서 기타 텍스트 내용 파싱 (전문가 소견, 적정 섭취량 등)
         String[] lines = response.split("\n");
         for (String line : lines) {
-            if (line.contains("전문가의 소견")) {
-                dto.setExpertOpinion(line.split(":")[1].trim());
-            } else if (line.contains("적정 섭취량")) {
-                dto.setProperIntake(line.split(":")[1].trim());
-            } else if (line.contains("섭취 방법")) {
-                dto.setIngestionMethod(line.split(":")[1].trim());
-            } else if (line.contains("혈당 지수")) {
-                dto.setGI(line.split(":")[1].trim());
+            try {
+                if (line.contains(":")) {
+                    String[] parts = line.split(":");
+                    if (parts.length > 1) {
+                        if (line.contains("전문가의 소견")) {
+                            dto.setExpertOpinion(parts[1].trim());
+                        } else if (line.contains("적정 섭취량")) {
+                            dto.setProperIntake(parts[1].trim());
+                        } else if (line.contains("섭취 방법")) {
+                            dto.setIngestionMethod(parts[1].trim());
+                        } else if (line.contains("혈당 지수")) {
+                            dto.setGI(parts[1].trim());
+                        }
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("지피티 파싱에러: " + e.getMessage());
             }
         }
+
 
         return dto;
     }
